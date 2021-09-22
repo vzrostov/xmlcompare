@@ -22,6 +22,7 @@ namespace XmlCompare.Presenter
 
         void OnStart()
         {
+            OnSettingsChanged(SettingsModel, true); // try to load previous
         }
 
         void OnChooseClick()
@@ -62,9 +63,9 @@ namespace XmlCompare.Presenter
         {
             return new Settings()
             {
-                IsShowDifferences = true,
-                LeftFileName = null,
-                RightFileName = null
+                IsShowDifferences = Properties.Settings.Default.IsShowDifferences,
+                LeftFileName = Properties.Settings.Default.LeftFileName,
+                RightFileName = Properties.Settings.Default.RightFileName
             };
         }
 

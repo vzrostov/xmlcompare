@@ -22,5 +22,41 @@ namespace XmlCompare.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LeftFileName {
+            get {
+                return ((string)(this["LeftFileName"]));
+            }
+            set {
+                this["LeftFileName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string RightFileName {
+            get {
+                return ((string)(this["RightFileName"]));
+            }
+            set {
+                this["RightFileName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsShowDifferences {
+            get {
+                return ((bool)(this["IsShowDifferences"]));
+            }
+            set {
+                this["IsShowDifferences"] = value;
+            }
+        }
     }
 }
