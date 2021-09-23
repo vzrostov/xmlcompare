@@ -50,6 +50,7 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.webBrowser2 = new System.Windows.Forms.WebBrowser();
+            this.directorySearcher1 = new System.DirectoryServices.DirectorySearcher();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -109,7 +110,7 @@
             this.showDifferentButton.Image = ((System.Drawing.Image)(resources.GetObject("showDifferentButton.Image")));
             this.showDifferentButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.showDifferentButton.Name = "showDifferentButton";
-            this.showDifferentButton.Size = new System.Drawing.Size(34, 69);
+            this.showDifferentButton.Size = new System.Drawing.Size(34, 52);
             this.showDifferentButton.Text = "Show only differences";
             this.showDifferentButton.Click += new System.EventHandler(this.showDifferentButton_Click);
             // 
@@ -119,7 +120,7 @@
             this.makeReportButton.Image = ((System.Drawing.Image)(resources.GetObject("makeReportButton.Image")));
             this.makeReportButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.makeReportButton.Name = "makeReportButton";
-            this.makeReportButton.Size = new System.Drawing.Size(34, 69);
+            this.makeReportButton.Size = new System.Drawing.Size(34, 52);
             this.makeReportButton.Text = "Make a report";
             this.makeReportButton.ToolTipText = "Make report";
             this.makeReportButton.Click += new System.EventHandler(this.makeReportButton_Click);
@@ -209,7 +210,7 @@
             this.treeView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.treeView.Name = "treeView";
             this.treeView.SelectedImageIndex = 0;
-            this.treeView.Size = new System.Drawing.Size(170, 541);
+            this.treeView.Size = new System.Drawing.Size(256, 541);
             this.treeView.TabIndex = 2;
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
@@ -242,7 +243,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Size = new System.Drawing.Size(783, 543);
-            this.splitContainer1.SplitterDistance = 172;
+            this.splitContainer1.SplitterDistance = 258;
             this.splitContainer1.SplitterWidth = 6;
             this.splitContainer1.TabIndex = 3;
             // 
@@ -262,8 +263,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.webBrowser2);
-            this.splitContainer2.Size = new System.Drawing.Size(605, 543);
-            this.splitContainer2.SplitterDistance = 180;
+            this.splitContainer2.Size = new System.Drawing.Size(519, 543);
+            this.splitContainer2.SplitterDistance = 260;
             this.splitContainer2.SplitterWidth = 5;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -275,7 +276,7 @@
             this.webBrowser1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(30, 31);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(603, 178);
+            this.webBrowser1.Size = new System.Drawing.Size(517, 258);
             this.webBrowser1.TabIndex = 0;
             this.webBrowser1.WebBrowserShortcutsEnabled = false;
             // 
@@ -287,9 +288,15 @@
             this.webBrowser2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.webBrowser2.MinimumSize = new System.Drawing.Size(30, 31);
             this.webBrowser2.Name = "webBrowser2";
-            this.webBrowser2.Size = new System.Drawing.Size(603, 356);
+            this.webBrowser2.Size = new System.Drawing.Size(517, 276);
             this.webBrowser2.TabIndex = 1;
             this.webBrowser2.WebBrowserShortcutsEnabled = false;
+            // 
+            // directorySearcher1
+            // 
+            this.directorySearcher1.ClientTimeout = System.TimeSpan.Parse("-00:00:01");
+            this.directorySearcher1.ServerPageTimeLimit = System.TimeSpan.Parse("-00:00:01");
+            this.directorySearcher1.ServerTimeLimit = System.TimeSpan.Parse("-00:00:01");
             // 
             // MainForm
             // 
@@ -343,6 +350,7 @@
         private System.Windows.Forms.WebBrowser webBrowser1;
         private System.Windows.Forms.WebBrowser webBrowser2;
         private System.Windows.Forms.ToolStripButton makeReportButton;
+        private System.DirectoryServices.DirectorySearcher directorySearcher1;
     }
 }
 

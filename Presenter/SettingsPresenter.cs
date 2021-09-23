@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using XmlCompare.Model;
 using XmlCompare.View;
 

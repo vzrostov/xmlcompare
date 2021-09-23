@@ -18,6 +18,7 @@ namespace XmlCompare.View
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            Reset();
             OnStart();
         }
 
@@ -25,7 +26,12 @@ namespace XmlCompare.View
         public event Action OnStart;
         public event CheckAction OnShowDifferencesClick;
         public event Action OnChooseClick;
+
         public bool IsShowDifferences { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public void SetFileNames(string l, string r)
+        {
+        }
         #endregion //ISettingsView
 
         #region ICompareView
@@ -38,6 +44,12 @@ namespace XmlCompare.View
         {
             treeView.Nodes.Clear();
         }
+
+        public void OnFileError()
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion //ICompareView
 
         private void showDifferentButton_Click(object sender, EventArgs e)

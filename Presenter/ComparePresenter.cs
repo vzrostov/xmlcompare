@@ -15,19 +15,15 @@ namespace XmlCompare.Presenter
         public ComparePresenter(ICompareView cv, ISettingsToCompare settingsToCompare)
         {
             CompareView = cv;
-            settingsToCompare.OnSettingsChanged += PrepareCompareResults;
+            settingsToCompare.OnSettingsChanged += OnSettingsChanged;
         }
 
         Compare CompareModel = new Compare();
         ICompareView CompareView;
 
-        private void PrepareCompareResults(ISettings s, bool wasFilesChanged)
+        #region ISettingsToCompare
+        private void OnSettingsChanged(ISettings s, bool wasFilesChanged)
         {
-            CompareModel.SettingsModel = s;
-            TreeNodeCollection ownerCollection = CompareView.GetTreeNodeCollection();
-            if (ownerCollection == null)
-                return;
-
             if(wasFilesChanged)
             {
                 if (string.IsNullOrEmpty(s.LeftFileName))
@@ -35,17 +31,35 @@ namespace XmlCompare.Presenter
                 if (string.IsNullOrEmpty(s.RightFileName))
                     return;
                 if (!File.Exists(s.LeftFileName))
+                {
+                    CompareView.OnFileError();
                     return;
+                }
                 if (!File.Exists(s.RightFileName))
+                {
+                    CompareView.OnFileError();
                     return;
+                }
 
                 CompareModel.Left = XDocument.Load(s.LeftFileName);
                 CompareModel.Right = XDocument.Load(s.RightFileName);
             }
 
+            CompareModel.SettingsModel = s;
+            TreeNodeCollection ownerCollection = CompareView.GetTreeNodeCollection();
+            if (ownerCollection == null)
+                return;
+
             CompareView.Reset();
-            ShowCompareResults(ownerCollection, CompareModel.Left.Root, CompareModel.Right.Root);
+            CompareView.SetFileNames(s.LeftFileName, s.RightFileName);
+            bool res = ShowCompareResults(ownerCollection, CompareModel.Left.Root, CompareModel.Right.Root);
         }
+
+        private void OnFileError()
+        {
+            CompareView.Reset();
+        }
+        #endregion //ISettingsToCompare
 
         #region Logic
         private const int ElementAdded = 1;

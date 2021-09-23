@@ -43,6 +43,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,10 +54,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Presenter\ComparePresenter.cs" />
+    <Compile Include="Presenter\HtmlWriter.cs" />
+    <Compile Include="Presenter\ISettingsToCompare.cs" />
     <Compile Include="Model\Compare.cs" />
     <Compile Include="Model\Settings.cs" />
-    <Compile Include="Presenter\ComparePresenter.cs" />
-    <Compile Include="Presenter\ISettingsToCompare.cs" />
     <Compile Include="Presenter\SettingsPresenter.cs" />
     <Compile Include="View\ICompareView.cs" />
     <Compile Include="Model\ISettings.cs" />
@@ -67,7 +69,6 @@
     <Compile Include="View\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Presenter\HtmlWriter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="View\MainForm.resx">

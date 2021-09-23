@@ -7,7 +7,11 @@ namespace XmlCompare.View
     {
         event Action OnChooseAgainClick; // button 2
         event Action OnMakeReportClick; // button 4
+        // getter
         TreeNodeCollection GetTreeNodeCollection();
+        // setter
         void Reset();
+        void SetFileNames(string l, string r);
+        void OnFileError();
     }
 }
