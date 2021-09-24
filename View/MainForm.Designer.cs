@@ -48,7 +48,9 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.F1Name = new System.Windows.Forms.TextBox();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.F2Name = new XmlCompare.View.CustomTextBox();
             this.webBrowser2 = new System.Windows.Forms.WebBrowser();
             this.directorySearcher1 = new System.DirectoryServices.DirectorySearcher();
             this.toolStrip1.SuspendLayout();
@@ -254,15 +256,34 @@
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.F1Name);
             this.splitContainer2.Panel1.Controls.Add(this.webBrowser1);
             // 
             // splitContainer2.Panel2
             // 
+            this.splitContainer2.Panel2.Controls.Add(this.F2Name);
             this.splitContainer2.Panel2.Controls.Add(this.webBrowser2);
             this.splitContainer2.Size = new System.Drawing.Size(649, 451);
             this.splitContainer2.SplitterDistance = 215;
             this.splitContainer2.SplitterWidth = 3;
             this.splitContainer2.TabIndex = 0;
+            // 
+            // F1Name
+            // 
+            this.F1Name.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.F1Name.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.F1Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.F1Name.ForeColor = System.Drawing.SystemColors.InactiveCaption;
+            this.F1Name.Location = new System.Drawing.Point(23, 106);
+            this.F1Name.Margin = new System.Windows.Forms.Padding(10);
+            this.F1Name.Multiline = true;
+            this.F1Name.Name = "F1Name";
+            this.F1Name.ReadOnly = true;
+            this.F1Name.Size = new System.Drawing.Size(594, 90);
+            this.F1Name.TabIndex = 1;
+            this.F1Name.Text = "ваваав";
+            this.F1Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // webBrowser1
             // 
@@ -274,6 +295,24 @@
             this.webBrowser1.Size = new System.Drawing.Size(647, 213);
             this.webBrowser1.TabIndex = 0;
             this.webBrowser1.WebBrowserShortcutsEnabled = false;
+            // 
+            // F2Name
+            // 
+            this.F2Name.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.F2Name.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.F2Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.F2Name.ForeColor = System.Drawing.SystemColors.InactiveCaption;
+            this.F2Name.Location = new System.Drawing.Point(23, 125);
+            this.F2Name.Margin = new System.Windows.Forms.Padding(10);
+            this.F2Name.Multiline = true;
+            this.F2Name.Name = "F2Name";
+            this.F2Name.ReadOnly = true;
+            this.F2Name.Size = new System.Drawing.Size(594, 90);
+            this.F2Name.TabIndex = 2;
+            this.F2Name.Text = "uyiyiy fjglfjg  аппоао оадопаопоа одаоп fjg jfg дап апапавпавп ап апавпыапа sfgsf" +
+    "gfg ";
+            this.F2Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // webBrowser2
             // 
@@ -314,7 +353,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
+            this.splitContainer2.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -344,6 +385,8 @@
         private System.Windows.Forms.WebBrowser webBrowser2;
         private System.Windows.Forms.ToolStripButton makeReportButton;
         private System.DirectoryServices.DirectorySearcher directorySearcher1;
+        private CustomTextBox F2Name;
+        private System.Windows.Forms.TextBox F1Name;
     }
 }
 

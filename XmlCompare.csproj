@@ -60,6 +60,9 @@
     <Compile Include="Model\Compare.cs" />
     <Compile Include="Model\Settings.cs" />
     <Compile Include="Presenter\SettingsPresenter.cs" />
+    <Compile Include="View\CustomTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="View\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
