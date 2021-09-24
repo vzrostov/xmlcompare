@@ -74,8 +74,8 @@
             this.makeReportButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 3, 0);
-            this.toolStrip1.Size = new System.Drawing.Size(783, 74);
+            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.toolStrip1.Size = new System.Drawing.Size(973, 48);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -110,7 +110,7 @@
             this.showDifferentButton.Image = ((System.Drawing.Image)(resources.GetObject("showDifferentButton.Image")));
             this.showDifferentButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.showDifferentButton.Name = "showDifferentButton";
-            this.showDifferentButton.Size = new System.Drawing.Size(34, 52);
+            this.showDifferentButton.Size = new System.Drawing.Size(28, 45);
             this.showDifferentButton.Text = "Show only differences";
             this.showDifferentButton.Click += new System.EventHandler(this.showDifferentButton_Click);
             // 
@@ -120,14 +120,13 @@
             this.makeReportButton.Image = ((System.Drawing.Image)(resources.GetObject("makeReportButton.Image")));
             this.makeReportButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.makeReportButton.Name = "makeReportButton";
-            this.makeReportButton.Size = new System.Drawing.Size(34, 52);
+            this.makeReportButton.Size = new System.Drawing.Size(28, 45);
             this.makeReportButton.Text = "Make a report";
             this.makeReportButton.ToolTipText = "Make report";
             this.makeReportButton.Click += new System.EventHandler(this.makeReportButton_Click);
             // 
             // menuStrip1
             // 
-            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
@@ -135,7 +134,8 @@
             this.hintToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(783, 33);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
+            this.menuStrip1.Size = new System.Drawing.Size(522, 21);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.Visible = false;
@@ -147,27 +147,27 @@
             this.toolStripMenuItem1,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 19);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // chooseFilesToolStripMenuItem
             // 
             this.chooseFilesToolStripMenuItem.Name = "chooseFilesToolStripMenuItem";
             this.chooseFilesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.chooseFilesToolStripMenuItem.Size = new System.Drawing.Size(411, 34);
+            this.chooseFilesToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
             this.chooseFilesToolStripMenuItem.Text = "Choose files for comparing ...";
             this.chooseFilesToolStripMenuItem.Click += new System.EventHandler(this.chooseComparingFilesToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(408, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(269, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(411, 34);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // compareToolStripMenuItem
@@ -175,14 +175,14 @@
             this.compareToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.replaceAgainToolStripMenuItem});
             this.compareToolStripMenuItem.Name = "compareToolStripMenuItem";
-            this.compareToolStripMenuItem.Size = new System.Drawing.Size(101, 29);
+            this.compareToolStripMenuItem.Size = new System.Drawing.Size(68, 19);
             this.compareToolStripMenuItem.Text = "Compare";
             // 
             // replaceAgainToolStripMenuItem
             // 
             this.replaceAgainToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("replaceAgainToolStripMenuItem.Image")));
             this.replaceAgainToolStripMenuItem.Name = "replaceAgainToolStripMenuItem";
-            this.replaceAgainToolStripMenuItem.Size = new System.Drawing.Size(235, 34);
+            this.replaceAgainToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.replaceAgainToolStripMenuItem.Text = "Compare again";
             this.replaceAgainToolStripMenuItem.Click += new System.EventHandler(this.replaceAgainToolStripMenuItem_Click);
             // 
@@ -191,14 +191,14 @@
             this.hintToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
             this.hintToolStripMenuItem.Name = "hintToolStripMenuItem";
-            this.hintToolStripMenuItem.Size = new System.Drawing.Size(61, 29);
+            this.hintToolStripMenuItem.Size = new System.Drawing.Size(42, 19);
             this.hintToolStripMenuItem.Text = "Hint";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("aboutToolStripMenuItem.Image")));
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(164, 34);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // treeView
@@ -207,10 +207,9 @@
             this.treeView.ImageIndex = 0;
             this.treeView.ImageList = this.imageList1;
             this.treeView.Location = new System.Drawing.Point(0, 0);
-            this.treeView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.treeView.Name = "treeView";
             this.treeView.SelectedImageIndex = 0;
-            this.treeView.Size = new System.Drawing.Size(256, 541);
+            this.treeView.Size = new System.Drawing.Size(318, 449);
             this.treeView.TabIndex = 2;
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
@@ -231,8 +230,7 @@
             // 
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 74);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 48);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -242,9 +240,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(783, 543);
-            this.splitContainer1.SplitterDistance = 258;
-            this.splitContainer1.SplitterWidth = 6;
+            this.splitContainer1.Size = new System.Drawing.Size(973, 451);
+            this.splitContainer1.SplitterDistance = 320;
             this.splitContainer1.TabIndex = 3;
             // 
             // splitContainer2
@@ -252,7 +249,6 @@
             this.splitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -263,9 +259,9 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.webBrowser2);
-            this.splitContainer2.Size = new System.Drawing.Size(519, 543);
-            this.splitContainer2.SplitterDistance = 260;
-            this.splitContainer2.SplitterWidth = 5;
+            this.splitContainer2.Size = new System.Drawing.Size(649, 451);
+            this.splitContainer2.SplitterDistance = 215;
+            this.splitContainer2.SplitterWidth = 3;
             this.splitContainer2.TabIndex = 0;
             // 
             // webBrowser1
@@ -273,10 +269,9 @@
             this.webBrowser1.AllowWebBrowserDrop = false;
             this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.webBrowser1.Location = new System.Drawing.Point(0, 0);
-            this.webBrowser1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(30, 31);
+            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(517, 258);
+            this.webBrowser1.Size = new System.Drawing.Size(647, 213);
             this.webBrowser1.TabIndex = 0;
             this.webBrowser1.WebBrowserShortcutsEnabled = false;
             // 
@@ -285,10 +280,9 @@
             this.webBrowser2.AllowWebBrowserDrop = false;
             this.webBrowser2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.webBrowser2.Location = new System.Drawing.Point(0, 0);
-            this.webBrowser2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.webBrowser2.MinimumSize = new System.Drawing.Size(30, 31);
+            this.webBrowser2.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser2.Name = "webBrowser2";
-            this.webBrowser2.Size = new System.Drawing.Size(517, 276);
+            this.webBrowser2.Size = new System.Drawing.Size(647, 231);
             this.webBrowser2.TabIndex = 1;
             this.webBrowser2.WebBrowserShortcutsEnabled = false;
             // 
@@ -300,15 +294,14 @@
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(783, 617);
+            this.ClientSize = new System.Drawing.Size(973, 499);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "MainForm";
             this.Text = "XmlCompare";
             this.Load += new System.EventHandler(this.MainForm_Load);

@@ -46,11 +46,13 @@ namespace XmlCompare.Presenter
             }
 
             CompareModel.SettingsModel = s;
+            // get collection to set result
             TreeNodeCollection ownerCollection = CompareView.GetTreeNodeCollection();
             if (ownerCollection == null)
                 return;
 
             CompareView.Reset();
+            CompareView.SetIsShowDifferences(s.IsShowDifferences);
             CompareView.SetFileNames(s.LeftFileName, s.RightFileName);
             bool res = ShowCompareResults(ownerCollection, CompareModel.Left.Root, CompareModel.Right.Root);
         }

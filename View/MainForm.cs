@@ -32,6 +32,12 @@ namespace XmlCompare.View
         public void SetFileNames(string l, string r)
         {
         }
+
+        void ICompareView.SetIsShowDifferences(bool f)
+        {
+            if (showDifferentButton.Checked != f)
+                showDifferentButton.Checked = f;
+        }
         #endregion //ISettingsView
 
         #region ICompareView
