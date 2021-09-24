@@ -48,11 +48,12 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.F1Name = new System.Windows.Forms.TextBox();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
-            this.F2Name = new XmlCompare.View.CustomTextBox();
             this.webBrowser2 = new System.Windows.Forms.WebBrowser();
             this.directorySearcher1 = new System.DirectoryServices.DirectorySearcher();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -63,6 +64,14 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
+            this.splitContainer3.Panel1.SuspendLayout();
+            this.splitContainer3.Panel2.SuspendLayout();
+            this.splitContainer3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
+            this.splitContainer4.Panel1.SuspendLayout();
+            this.splitContainer4.Panel2.SuspendLayout();
+            this.splitContainer4.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -211,7 +220,7 @@
             this.treeView.Location = new System.Drawing.Point(0, 0);
             this.treeView.Name = "treeView";
             this.treeView.SelectedImageIndex = 0;
-            this.treeView.Size = new System.Drawing.Size(318, 449);
+            this.treeView.Size = new System.Drawing.Size(318, 433);
             this.treeView.TabIndex = 2;
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
@@ -232,7 +241,7 @@
             // 
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 48);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -242,7 +251,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(973, 451);
+            this.splitContainer1.Size = new System.Drawing.Size(973, 435);
             this.splitContainer1.SplitterDistance = 320;
             this.splitContainer1.TabIndex = 3;
             // 
@@ -256,34 +265,15 @@
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.F1Name);
             this.splitContainer2.Panel1.Controls.Add(this.webBrowser1);
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.F2Name);
             this.splitContainer2.Panel2.Controls.Add(this.webBrowser2);
-            this.splitContainer2.Size = new System.Drawing.Size(649, 451);
-            this.splitContainer2.SplitterDistance = 215;
+            this.splitContainer2.Size = new System.Drawing.Size(649, 435);
+            this.splitContainer2.SplitterDistance = 216;
             this.splitContainer2.SplitterWidth = 3;
             this.splitContainer2.TabIndex = 0;
-            // 
-            // F1Name
-            // 
-            this.F1Name.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.F1Name.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.F1Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.F1Name.ForeColor = System.Drawing.SystemColors.InactiveCaption;
-            this.F1Name.Location = new System.Drawing.Point(23, 106);
-            this.F1Name.Margin = new System.Windows.Forms.Padding(10);
-            this.F1Name.Multiline = true;
-            this.F1Name.Name = "F1Name";
-            this.F1Name.ReadOnly = true;
-            this.F1Name.Size = new System.Drawing.Size(594, 90);
-            this.F1Name.TabIndex = 1;
-            this.F1Name.Text = "ваваав";
-            this.F1Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // webBrowser1
             // 
@@ -292,27 +282,9 @@
             this.webBrowser1.Location = new System.Drawing.Point(0, 0);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(647, 213);
+            this.webBrowser1.Size = new System.Drawing.Size(647, 214);
             this.webBrowser1.TabIndex = 0;
             this.webBrowser1.WebBrowserShortcutsEnabled = false;
-            // 
-            // F2Name
-            // 
-            this.F2Name.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.F2Name.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.F2Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.F2Name.ForeColor = System.Drawing.SystemColors.InactiveCaption;
-            this.F2Name.Location = new System.Drawing.Point(23, 125);
-            this.F2Name.Margin = new System.Windows.Forms.Padding(10);
-            this.F2Name.Multiline = true;
-            this.F2Name.Name = "F2Name";
-            this.F2Name.ReadOnly = true;
-            this.F2Name.Size = new System.Drawing.Size(594, 90);
-            this.F2Name.TabIndex = 2;
-            this.F2Name.Text = "uyiyiy fjglfjg  аппоао оадопаопоа одаоп fjg jfg дап апапавпавп ап апавпыапа sfgsf" +
-    "gfg ";
-            this.F2Name.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // webBrowser2
             // 
@@ -321,7 +293,7 @@
             this.webBrowser2.Location = new System.Drawing.Point(0, 0);
             this.webBrowser2.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser2.Name = "webBrowser2";
-            this.webBrowser2.Size = new System.Drawing.Size(647, 231);
+            this.webBrowser2.Size = new System.Drawing.Size(647, 214);
             this.webBrowser2.TabIndex = 1;
             this.webBrowser2.WebBrowserShortcutsEnabled = false;
             // 
@@ -331,13 +303,59 @@
             this.directorySearcher1.ServerPageTimeLimit = System.TimeSpan.Parse("-00:00:01");
             this.directorySearcher1.ServerTimeLimit = System.TimeSpan.Parse("-00:00:01");
             // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(973, 60);
+            this.panel1.TabIndex = 4;
+            // 
+            // splitContainer3
+            // 
+            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer3.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.splitContainer3.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer3.Name = "splitContainer3";
+            this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer3.Panel1
+            // 
+            this.splitContainer3.Panel1.Controls.Add(this.splitContainer1);
+            // 
+            // splitContainer3.Panel2
+            // 
+            this.splitContainer3.Panel2.Controls.Add(this.panel1);
+            this.splitContainer3.Size = new System.Drawing.Size(973, 499);
+            this.splitContainer3.SplitterDistance = 435;
+            this.splitContainer3.TabIndex = 5;
+            // 
+            // splitContainer4
+            // 
+            this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer4.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer4.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer4.Name = "splitContainer4";
+            this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer4.Panel1
+            // 
+            this.splitContainer4.Panel1.Controls.Add(this.toolStrip1);
+            // 
+            // splitContainer4.Panel2
+            // 
+            this.splitContainer4.Panel2.Controls.Add(this.splitContainer3);
+            this.splitContainer4.Size = new System.Drawing.Size(973, 551);
+            this.splitContainer4.SplitterDistance = 48;
+            this.splitContainer4.TabIndex = 6;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(973, 499);
-            this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.toolStrip1);
+            this.ClientSize = new System.Drawing.Size(973, 551);
+            this.Controls.Add(this.splitContainer4);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
@@ -353,11 +371,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
-            this.splitContainer2.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            this.splitContainer3.Panel1.ResumeLayout(false);
+            this.splitContainer3.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
+            this.splitContainer3.ResumeLayout(false);
+            this.splitContainer4.Panel1.ResumeLayout(false);
+            this.splitContainer4.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
+            this.splitContainer4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -385,8 +409,9 @@
         private System.Windows.Forms.WebBrowser webBrowser2;
         private System.Windows.Forms.ToolStripButton makeReportButton;
         private System.DirectoryServices.DirectorySearcher directorySearcher1;
-        private CustomTextBox F2Name;
-        private System.Windows.Forms.TextBox F1Name;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.SplitContainer splitContainer3;
+        private System.Windows.Forms.SplitContainer splitContainer4;
     }
 }
 

@@ -26,7 +26,7 @@ namespace XmlCompare.View
             var backgroundBrush = new SolidBrush(Color.Transparent);
             Graphics g = e.Graphics;
             g.FillRectangle(backgroundBrush, 0, 0, this.Width, this.Height);
-            g.DrawString(Text, Font, new SolidBrush(ForeColor), new PointF(0, 0), StringFormat.GenericDefault);
+            //g.DrawString(Text, Font, new SolidBrush(ForeColor), new PointF(0, 0), StringFormat.GenericDefault);
         }
     }
 }

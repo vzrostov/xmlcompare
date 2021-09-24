@@ -124,5 +124,10 @@ namespace XmlCompare.View
             //    Process.Start("Report.html");
             //}
         }
+
+        private void F2Name_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
