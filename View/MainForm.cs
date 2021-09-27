@@ -30,24 +30,24 @@ namespace XmlCompare.View
             SetTextBoxStyle(rTextBox, 1, 0);
         }
 
-        private void SetTextBoxStyle(TextBox textBox, int col, int row)
+        private void SetTextBoxStyle(RichTextBox textBox, int col, int row)
         {
             textBox.Font = new Font("Arial", 14, FontStyle.Regular);
             textBox.Name = "TextBox" + col + row;
-            textBox.TextAlign = HorizontalAlignment.Center;
+            textBox.SelectionAlignment = HorizontalAlignment.Center;
             textBox.Margin = new Padding(0);
             textBox.BorderStyle = BorderStyle.None;
             textBox.Dock = DockStyle.Fill;
             textBox.MaxLength = 10;
             textBox.Text = "";
-            textBox.ScrollBars = ScrollBars.Vertical;
+            textBox.ScrollBars = RichTextBoxScrollBars.Vertical;
             textBox.Multiline = true;
             tableLayoutPanelLow.Controls.Add(textBox, col, row);
         }
 
         #region ISettingsView
-        TextBox lTextBox = new TextBox();
-        TextBox rTextBox = new TextBox();
+        RichTextBox lTextBox = new RichTextBox();
+        RichTextBox rTextBox = new RichTextBox();
 
         public event Action OnStart;
         public event CheckAction OnShowDifferencesClick;
@@ -57,8 +57,17 @@ namespace XmlCompare.View
 
         public void SetFileNames(string l, string r)
         {
-            tableLayoutPanelLow.GetControlFromPosition(0, 0).Text = l;
-            tableLayoutPanelLow.GetControlFromPosition(1, 0).Text = r;
+            RealSetTextFileNameInBox(tableLayoutPanelLow.GetControlFromPosition(0, 0) as RichTextBox, l);
+            RealSetTextFileNameInBox(tableLayoutPanelLow.GetControlFromPosition(1, 0) as RichTextBox, r);
+        }
+
+        private void RealSetTextFileNameInBox(RichTextBox rb, string str)
+        {
+            rb.Text = str==null? "File reading error" : str;
+            rb.ForeColor = str == null ? Color.Red : Color.Black;
+            rb.Font = str == null ? new Font("Arial", 15, FontStyle.Bold) : new Font("Arial", 13, FontStyle.Regular);
+            rb.SelectAll();
+            rb.SelectionAlignment = HorizontalAlignment.Center;
         }
 
         void ICompareView.SetIsShowDifferences(bool f)
@@ -79,9 +88,19 @@ namespace XmlCompare.View
             treeView.Nodes.Clear();
         }
 
-        public void OnFileError()
+        public void OnFileLeftError()
         {
-            throw new NotImplementedException();
+            RealSetTextFileNameInBox(tableLayoutPanelLow.GetControlFromPosition(0, 0) as RichTextBox, null);
+        }
+
+        public void OnFileRightError()
+        {
+            RealSetTextFileNameInBox(tableLayoutPanelLow.GetControlFromPosition(1, 0) as RichTextBox, null);
+        }
+
+        public void OnEqualFiles()
+        {
+            //MessageBox.Show("Both files are identical");
         }
 
         #endregion //ICompareView
@@ -151,16 +170,6 @@ namespace XmlCompare.View
 
             //    Process.Start("Report.html");
             //}
-        }
-
-        private void F2Name_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
         }
     }
 }

@@ -11,5 +11,10 @@ namespace XmlCompare.Model
         public ISettings SettingsModel { get; set; }
         public XDocument Left { get; set; }
         public XDocument Right { get; set; }
+
+        internal bool IsValid()
+        {
+            return Left!=null && Right!=null;
+        }
     }
 }

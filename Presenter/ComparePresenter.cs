@@ -32,12 +32,12 @@ namespace XmlCompare.Presenter
                     return;
                 if (!File.Exists(s.LeftFileName))
                 {
-                    CompareView.OnFileError();
+                    CompareView.OnFileLeftError();
                     return;
                 }
                 if (!File.Exists(s.RightFileName))
                 {
-                    CompareView.OnFileError();
+                    CompareView.OnFileRightError();
                     return;
                 }
 
@@ -53,13 +53,13 @@ namespace XmlCompare.Presenter
 
             CompareView.Reset();
             CompareView.SetIsShowDifferences(s.IsShowDifferences);
-            CompareView.SetFileNames(s.LeftFileName, s.RightFileName);
-            bool res = ShowCompareResults(ownerCollection, CompareModel.Left.Root, CompareModel.Right.Root);
-        }
-
-        private void OnFileError()
-        {
-            CompareView.Reset();
+            if(CompareModel.IsValid())
+            {
+                CompareView.SetFileNames(s.LeftFileName, s.RightFileName);
+                bool eq = ShowCompareResults(ownerCollection, CompareModel.Left?.Root, CompareModel.Right?.Root);
+                if (eq)
+                    CompareView.OnEqualFiles();
+            }
         }
         #endregion //ISettingsToCompare
 

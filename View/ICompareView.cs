@@ -13,6 +13,8 @@ namespace XmlCompare.View
         void Reset();
         void SetFileNames(string l, string r);
         void SetIsShowDifferences(bool f);
-        void OnFileError();
+        void OnFileLeftError();
+        void OnFileRightError();
+        void OnEqualFiles();
     }
 }
