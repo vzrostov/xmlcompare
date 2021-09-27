@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -19,10 +20,35 @@ namespace XmlCompare.View
         private void MainForm_Load(object sender, EventArgs e)
         {
             Reset();
+            Set();
             OnStart();
         }
 
+        void Set()
+        {
+            SetTextBoxStyle(lTextBox, 0, 0);
+            SetTextBoxStyle(rTextBox, 1, 0);
+        }
+
+        private void SetTextBoxStyle(TextBox textBox, int col, int row)
+        {
+            textBox.Font = new Font("Arial", 14, FontStyle.Regular);
+            textBox.Name = "TextBox" + col + row;
+            textBox.TextAlign = HorizontalAlignment.Center;
+            textBox.Margin = new Padding(0);
+            textBox.BorderStyle = BorderStyle.None;
+            textBox.Dock = DockStyle.Fill;
+            textBox.MaxLength = 10;
+            textBox.Text = "";
+            textBox.ScrollBars = ScrollBars.Vertical;
+            textBox.Multiline = true;
+            tableLayoutPanelLow.Controls.Add(textBox, col, row);
+        }
+
         #region ISettingsView
+        TextBox lTextBox = new TextBox();
+        TextBox rTextBox = new TextBox();
+
         public event Action OnStart;
         public event CheckAction OnShowDifferencesClick;
         public event Action OnChooseClick;
@@ -31,6 +57,8 @@ namespace XmlCompare.View
 
         public void SetFileNames(string l, string r)
         {
+            tableLayoutPanelLow.GetControlFromPosition(0, 0).Text = l;
+            tableLayoutPanelLow.GetControlFromPosition(1, 0).Text = r;
         }
 
         void ICompareView.SetIsShowDifferences(bool f)
@@ -126,6 +154,11 @@ namespace XmlCompare.View
         }
 
         private void F2Name_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
         }

@@ -54,6 +54,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
+            this.tableLayoutPanelLow = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -64,6 +65,7 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.Panel2.SuspendLayout();
@@ -85,8 +87,8 @@
             this.makeReportButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.toolStrip1.Size = new System.Drawing.Size(973, 48);
+            this.toolStrip1.Padding = new System.Windows.Forms.Padding(0, 0, 3, 0);
+            this.toolStrip1.Size = new System.Drawing.Size(1460, 74);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -121,7 +123,7 @@
             this.showDifferentButton.Image = ((System.Drawing.Image)(resources.GetObject("showDifferentButton.Image")));
             this.showDifferentButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.showDifferentButton.Name = "showDifferentButton";
-            this.showDifferentButton.Size = new System.Drawing.Size(28, 45);
+            this.showDifferentButton.Size = new System.Drawing.Size(34, 69);
             this.showDifferentButton.Text = "Show only differences";
             this.showDifferentButton.Click += new System.EventHandler(this.showDifferentButton_Click);
             // 
@@ -131,13 +133,14 @@
             this.makeReportButton.Image = ((System.Drawing.Image)(resources.GetObject("makeReportButton.Image")));
             this.makeReportButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.makeReportButton.Name = "makeReportButton";
-            this.makeReportButton.Size = new System.Drawing.Size(28, 45);
+            this.makeReportButton.Size = new System.Drawing.Size(34, 69);
             this.makeReportButton.Text = "Make a report";
             this.makeReportButton.ToolTipText = "Make report";
             this.makeReportButton.Click += new System.EventHandler(this.makeReportButton_Click);
             // 
             // menuStrip1
             // 
+            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(2, 2, 0, 2);
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
@@ -145,8 +148,8 @@
             this.hintToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
-            this.menuStrip1.Size = new System.Drawing.Size(522, 21);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(6, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(783, 32);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.Visible = false;
@@ -158,27 +161,27 @@
             this.toolStripMenuItem1,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 19);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 28);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // chooseFilesToolStripMenuItem
             // 
             this.chooseFilesToolStripMenuItem.Name = "chooseFilesToolStripMenuItem";
             this.chooseFilesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.chooseFilesToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
+            this.chooseFilesToolStripMenuItem.Size = new System.Drawing.Size(411, 34);
             this.chooseFilesToolStripMenuItem.Text = "Choose files for comparing ...";
             this.chooseFilesToolStripMenuItem.Click += new System.EventHandler(this.chooseComparingFilesToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(269, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(408, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(411, 34);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // compareToolStripMenuItem
@@ -186,14 +189,14 @@
             this.compareToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.replaceAgainToolStripMenuItem});
             this.compareToolStripMenuItem.Name = "compareToolStripMenuItem";
-            this.compareToolStripMenuItem.Size = new System.Drawing.Size(68, 19);
+            this.compareToolStripMenuItem.Size = new System.Drawing.Size(101, 28);
             this.compareToolStripMenuItem.Text = "Compare";
             // 
             // replaceAgainToolStripMenuItem
             // 
             this.replaceAgainToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("replaceAgainToolStripMenuItem.Image")));
             this.replaceAgainToolStripMenuItem.Name = "replaceAgainToolStripMenuItem";
-            this.replaceAgainToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.replaceAgainToolStripMenuItem.Size = new System.Drawing.Size(235, 34);
             this.replaceAgainToolStripMenuItem.Text = "Compare again";
             this.replaceAgainToolStripMenuItem.Click += new System.EventHandler(this.replaceAgainToolStripMenuItem_Click);
             // 
@@ -202,14 +205,14 @@
             this.hintToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
             this.hintToolStripMenuItem.Name = "hintToolStripMenuItem";
-            this.hintToolStripMenuItem.Size = new System.Drawing.Size(42, 19);
+            this.hintToolStripMenuItem.Size = new System.Drawing.Size(61, 28);
             this.hintToolStripMenuItem.Text = "Hint";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("aboutToolStripMenuItem.Image")));
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(164, 34);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // treeView
@@ -218,9 +221,10 @@
             this.treeView.ImageIndex = 0;
             this.treeView.ImageList = this.imageList1;
             this.treeView.Location = new System.Drawing.Point(0, 0);
+            this.treeView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.treeView.Name = "treeView";
             this.treeView.SelectedImageIndex = 0;
-            this.treeView.Size = new System.Drawing.Size(318, 433);
+            this.treeView.Size = new System.Drawing.Size(478, 726);
             this.treeView.TabIndex = 2;
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
@@ -242,6 +246,7 @@
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -251,8 +256,9 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(973, 435);
-            this.splitContainer1.SplitterDistance = 320;
+            this.splitContainer1.Size = new System.Drawing.Size(1460, 728);
+            this.splitContainer1.SplitterDistance = 480;
+            this.splitContainer1.SplitterWidth = 6;
             this.splitContainer1.TabIndex = 3;
             // 
             // splitContainer2
@@ -260,6 +266,7 @@
             this.splitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -270,9 +277,9 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.webBrowser2);
-            this.splitContainer2.Size = new System.Drawing.Size(649, 435);
-            this.splitContainer2.SplitterDistance = 216;
-            this.splitContainer2.SplitterWidth = 3;
+            this.splitContainer2.Size = new System.Drawing.Size(974, 728);
+            this.splitContainer2.SplitterDistance = 361;
+            this.splitContainer2.SplitterWidth = 5;
             this.splitContainer2.TabIndex = 0;
             // 
             // webBrowser1
@@ -280,9 +287,10 @@
             this.webBrowser1.AllowWebBrowserDrop = false;
             this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.webBrowser1.Location = new System.Drawing.Point(0, 0);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.webBrowser1.MinimumSize = new System.Drawing.Size(30, 31);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(647, 214);
+            this.webBrowser1.Size = new System.Drawing.Size(972, 359);
             this.webBrowser1.TabIndex = 0;
             this.webBrowser1.WebBrowserShortcutsEnabled = false;
             // 
@@ -291,9 +299,10 @@
             this.webBrowser2.AllowWebBrowserDrop = false;
             this.webBrowser2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.webBrowser2.Location = new System.Drawing.Point(0, 0);
-            this.webBrowser2.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.webBrowser2.MinimumSize = new System.Drawing.Size(30, 31);
             this.webBrowser2.Name = "webBrowser2";
-            this.webBrowser2.Size = new System.Drawing.Size(647, 214);
+            this.webBrowser2.Size = new System.Drawing.Size(972, 360);
             this.webBrowser2.TabIndex = 1;
             this.webBrowser2.WebBrowserShortcutsEnabled = false;
             // 
@@ -305,11 +314,13 @@
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel1.BackColor = System.Drawing.SystemColors.Window;
+            this.panel1.Controls.Add(this.tableLayoutPanelLow);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(973, 60);
+            this.panel1.Size = new System.Drawing.Size(1460, 60);
             this.panel1.TabIndex = 4;
             // 
             // splitContainer3
@@ -317,6 +328,7 @@
             this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer3.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitContainer3.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.splitContainer3.Name = "splitContainer3";
             this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -327,8 +339,9 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.panel1);
-            this.splitContainer3.Size = new System.Drawing.Size(973, 499);
-            this.splitContainer3.SplitterDistance = 435;
+            this.splitContainer3.Size = new System.Drawing.Size(1460, 794);
+            this.splitContainer3.SplitterDistance = 728;
+            this.splitContainer3.SplitterWidth = 6;
             this.splitContainer3.TabIndex = 5;
             // 
             // splitContainer4
@@ -336,6 +349,7 @@
             this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer4.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.splitContainer4.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.splitContainer4.Name = "splitContainer4";
             this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -346,19 +360,38 @@
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.splitContainer3);
-            this.splitContainer4.Size = new System.Drawing.Size(973, 551);
+            this.splitContainer4.Size = new System.Drawing.Size(1460, 848);
             this.splitContainer4.SplitterDistance = 48;
+            this.splitContainer4.SplitterWidth = 6;
             this.splitContainer4.TabIndex = 6;
+            // 
+            // tableLayoutPanelLow
+            // 
+            this.tableLayoutPanelLow.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanelLow.BackColor = System.Drawing.SystemColors.Window;
+            this.tableLayoutPanelLow.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.InsetDouble;
+            this.tableLayoutPanelLow.ColumnCount = 2;
+            this.tableLayoutPanelLow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelLow.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelLow.Location = new System.Drawing.Point(1, 3);
+            this.tableLayoutPanelLow.Name = "tableLayoutPanelLow";
+            this.tableLayoutPanelLow.RowCount = 1;
+            this.tableLayoutPanelLow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelLow.Size = new System.Drawing.Size(1456, 56);
+            this.tableLayoutPanelLow.TabIndex = 0;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(973, 551);
+            this.ClientSize = new System.Drawing.Size(1460, 848);
             this.Controls.Add(this.splitContainer4);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "MainForm";
             this.Text = "XmlCompare";
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -374,6 +407,7 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.splitContainer3.Panel1.ResumeLayout(false);
             this.splitContainer3.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
@@ -412,6 +446,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.SplitContainer splitContainer4;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelLow;
     }
 }
 
