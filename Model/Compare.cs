@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 namespace XmlCompare.Model
 {
-    class Compare
+    class Compare : ICompare
     {
         public ISettings SettingsModel { get; set; }
         public XDocument Left { get; set; }
@@ -16,5 +12,13 @@ namespace XmlCompare.Model
         {
             return Left!=null && Right!=null;
         }
+
+
+        #region ICompare
+        public string LeftFileName => SettingsModel?.LeftFileName ?? "";
+
+        public string RightFileName => SettingsModel?.RightFileName ?? "";
+        #endregion //ICompare
+
     }
 }

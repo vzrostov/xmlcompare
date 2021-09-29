@@ -7,6 +7,10 @@ namespace XmlCompare.Presenter
 {
     class SettingsPresenter : ISettingsToCompare
     {
+        /// <summary>
+        /// Operates with logic of compare settings (file names, flags)
+        /// </summary>
+        /// <param name="sv">Conection to view</param>
         public SettingsPresenter(ISettingsView sv)
         {
             SettingsModel = GetSettings();
@@ -60,6 +64,10 @@ namespace XmlCompare.Presenter
             OnSettingsChanged(SettingsModel, false);
         }
 
+        /// <summary>
+        /// Get Settings from saved state or make new one
+        /// </summary>
+        /// <returns></returns>
         Settings GetSettings()
         {
             return new Settings()

@@ -53,7 +53,7 @@ namespace XmlCompare.View
         public event CheckAction OnShowDifferencesClick;
         public event Action OnChooseClick;
 
-        public bool IsShowDifferences { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool IsShowDifferences { get; set; }
 
         public void SetFileNames(string l, string r)
         {
@@ -102,7 +102,6 @@ namespace XmlCompare.View
         {
             //MessageBox.Show("Both files are identical");
         }
-
         #endregion //ICompareView
 
         private void showDifferentButton_Click(object sender, EventArgs e)
@@ -152,24 +151,13 @@ namespace XmlCompare.View
 
         private void makeReportButton_Click(object sender, EventArgs e)
         {
-            //if (string.IsNullOrEmpty(_leftFileName)) return;
-            //if (string.IsNullOrEmpty(_rightFileName)) return;
+            if (OnMakeReportClick != null)
+                OnMakeReportClick();
+        }
 
-            //using (var writer = XmlWriter.Create("Report.html"))
-            //{
-            //    writer.WriteStartElement("html");
-            //    writer.WriteStartElement("head");
-            //    writer.WriteStartElement("title");
-            //    writer.WriteString("Отличия");
-            //    writer.WriteEndElement();
-            //    writer.WriteEndElement();
-            //    writer.WriteStartElement("body");
-            //    writer.Write("Список отличий файла " + _rightFileName + " относительно файла " + _leftFileName, "h2");
-            //    writer.WriteEndElement();
-            //    writer.WriteEndElement();
-
-            //    Process.Start("Report.html");
-            //}
+        public void OnReportSaveError()
+        {
+            MessageBox.Show("Nothing to save in report");
         }
     }
 }

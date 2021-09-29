@@ -12,14 +12,19 @@ namespace XmlCompare.Presenter
 {
     class ComparePresenter
     {
-        public ComparePresenter(ICompareView cv, ISettingsToCompare settingsToCompare)
+        public ComparePresenter(ICompareView cv, ISettingsToCompare settingsToCompare, ReportPresenter rp)
         {
             CompareView = cv;
+            ReportPresenter = rp;
+            //
+            cv.OnMakeReportClick += OnMakeReportClick;
+            rp.OnReportSaveError += OnReportSaveError;
             settingsToCompare.OnSettingsChanged += OnSettingsChanged;
         }
 
         Compare CompareModel = new Compare();
         ICompareView CompareView;
+        ReportPresenter ReportPresenter;
 
         #region ISettingsToCompare
         private void OnSettingsChanged(ISettings s, bool wasFilesChanged)
@@ -218,5 +223,17 @@ namespace XmlCompare.Presenter
             return s1.Where(i => !s2.Contains(i));
         }
         #endregion //Logic
+
+        #region Report
+        void OnMakeReportClick()
+        {
+            ReportPresenter.OnMakeReportClick(CompareModel);
+        }
+        void OnReportSaveError()
+        {
+            CompareView.OnReportSaveError();
+        }
+        #endregion //Report
+
     }
 }
