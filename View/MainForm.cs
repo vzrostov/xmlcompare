@@ -12,9 +12,10 @@ namespace XmlCompare.View
 {
     public partial class MainForm : Form, ISettingsView, ICompareView
     {
-        public MainForm()
+        public MainForm(bool isTest = false)
         {
-            InitializeComponent();
+            if(!isTest)
+                InitializeComponent();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
