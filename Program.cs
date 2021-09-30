@@ -21,7 +21,7 @@ namespace XmlCompare
             //
             var mf = new MainForm();
             var sp = new SettingsPresenter(mf);
-            var cp = new ComparePresenter(mf, sp);
+            var cp = new ComparePresenter(mf, sp, new ReportPresenter());
             //
             Application.Run(mf);
         }

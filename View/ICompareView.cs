@@ -16,5 +16,6 @@ namespace XmlCompare.View
         void OnFileLeftError();
         void OnFileRightError();
         void OnEqualFiles();
+        void OnReportSaveError();
     }
 }
