@@ -206,7 +206,6 @@ namespace XmlCompare.Presenter
                 else if (!lc && rc)
                     r.Add(right.Attribute(attr));
                 else b.Add(new KeyValuePair<XAttribute, XAttribute>(left.Attribute(attr), right.Attribute(attr)));
-
             }
             onlyLeft = l;
             onlyRight = r;
