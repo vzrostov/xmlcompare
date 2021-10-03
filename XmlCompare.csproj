@@ -79,6 +79,7 @@
     <Compile Include="Model\Settings.cs" />
     <Compile Include="Presenter\ReportPresenter.cs" />
     <Compile Include="Presenter\SettingsPresenter.cs" />
+    <Compile Include="Tests\CompareTest.cs" />
     <Compile Include="Tests\SettingsTest.cs" />
     <Compile Include="View\ICompareView.cs" />
     <Compile Include="Model\ISettings.cs" />

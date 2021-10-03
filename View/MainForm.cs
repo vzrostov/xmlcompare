@@ -101,7 +101,7 @@ namespace XmlCompare.View
 
         public void OnEqualFiles()
         {
-            //MessageBox.Show("Both files are identical");
+            MessageBox.Show("Both files are identical");
         }
         #endregion //ICompareView
 

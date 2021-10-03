@@ -18,6 +18,7 @@ namespace XmlCompare.Model
         public string LeftFileName => SettingsModel?.LeftFileName ?? "";
 
         public string RightFileName => SettingsModel?.RightFileName ?? "";
+        public bool HasDifferences { get; set; }
         #endregion //ICompare
 
     }

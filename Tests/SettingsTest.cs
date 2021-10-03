@@ -1,4 +1,5 @@
-﻿using XmlCompare.Model;
+﻿using System;
+using XmlCompare.Model;
 using XmlCompare.Presenter;
 using XmlCompare.View;
 using Xunit;
@@ -12,10 +13,28 @@ namespace XmlCompare.Tests
         {
             var mf = new MainForm(true);
             var sp = new SettingsPresenter(mf);
-            var cp = new ComparePresenter(mf, sp);
+            var cp = new ComparePresenter(mf, sp, new ReportPresenter());
+            var cpn = new ComparePresenter(mf, sp, null); // ReportPresenter can be null
             Assert.NotNull(mf);
             Assert.NotNull(sp);
             Assert.NotNull(cp);
+            Assert.NotNull(cpn);
+            // others can not be null
+            {
+                bool fl = false;
+                try { new ComparePresenter(null, sp, null); } catch (ArgumentNullException) { fl = true;  }
+                Assert.True(fl);
+            }
+            {
+                bool fl = false;
+                try { new ComparePresenter(mf, null, null); } catch (ArgumentNullException) { fl = true; }
+                Assert.True(fl);
+            }
+            {
+                bool fl = false;
+                try { new ComparePresenter(null, null, null); } catch (ArgumentNullException) { fl = true; }
+                Assert.True(fl);
+            }
         }
 
         [Fact]
