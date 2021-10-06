@@ -42,7 +42,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.compareToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.replaceAgainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.compareAgainToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hintToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.treeView = new System.Windows.Forms.TreeView();
@@ -114,7 +114,7 @@
             this.compareStripButton.Name = "compareStripButton";
             this.compareStripButton.Size = new System.Drawing.Size(32, 32);
             this.compareStripButton.Text = "Compare";
-            this.compareStripButton.Click += new System.EventHandler(this.replaceAgainToolStripMenuItem_Click);
+            this.compareStripButton.Click += new System.EventHandler(this.compareAgainToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -193,18 +193,18 @@
             // compareToolStripMenuItem
             // 
             this.compareToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.replaceAgainToolStripMenuItem});
+            this.compareAgainToolStripMenuItem});
             this.compareToolStripMenuItem.Name = "compareToolStripMenuItem";
             this.compareToolStripMenuItem.Size = new System.Drawing.Size(101, 28);
             this.compareToolStripMenuItem.Text = "Compare";
             // 
-            // replaceAgainToolStripMenuItem
+            // compareAgainToolStripMenuItem
             // 
-            this.replaceAgainToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("replaceAgainToolStripMenuItem.Image")));
-            this.replaceAgainToolStripMenuItem.Name = "replaceAgainToolStripMenuItem";
-            this.replaceAgainToolStripMenuItem.Size = new System.Drawing.Size(235, 34);
-            this.replaceAgainToolStripMenuItem.Text = "Compare again";
-            this.replaceAgainToolStripMenuItem.Click += new System.EventHandler(this.replaceAgainToolStripMenuItem_Click);
+            this.compareAgainToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("compareAgainToolStripMenuItem.Image")));
+            this.compareAgainToolStripMenuItem.Name = "compareAgainToolStripMenuItem";
+            this.compareAgainToolStripMenuItem.Size = new System.Drawing.Size(235, 34);
+            this.compareAgainToolStripMenuItem.Text = "Compare again";
+            this.compareAgainToolStripMenuItem.Click += new System.EventHandler(this.compareAgainToolStripMenuItem_Click);
             // 
             // hintToolStripMenuItem
             // 
@@ -437,7 +437,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem compareToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem replaceAgainToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem compareAgainToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hintToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.TreeView treeView;

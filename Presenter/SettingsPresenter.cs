@@ -11,9 +11,13 @@ namespace XmlCompare.Presenter
         /// Operates with logic of compare settings (file names, flags)
         /// </summary>
         /// <param name="sv">Conection to view</param>
-        public SettingsPresenter(ISettingsView sv)
+        public SettingsPresenter(ISettingsView sv, Settings settings)
         {
-            SettingsModel = GetSettings();
+            if (sv == null)
+                throw new ArgumentNullException();
+            if (settings == null)
+                throw new ArgumentNullException();
+            SettingsModel = settings;
             SettingsView = sv;
             SettingsView.OnStart += OnStart;
             SettingsView.OnChooseClick += OnChooseClick;
@@ -63,20 +67,5 @@ namespace XmlCompare.Presenter
             SettingsModel.IsShowDifferences = check;
             OnSettingsChanged(SettingsModel, false);
         }
-
-        /// <summary>
-        /// Get Settings from saved state or make new one
-        /// </summary>
-        /// <returns></returns>
-        Settings GetSettings()
-        {
-            return new Settings()
-            {
-                IsShowDifferences = Properties.Settings.Default.IsShowDifferences,
-                LeftFileName = Properties.Settings.Default.LeftFileName,
-                RightFileName = Properties.Settings.Default.RightFileName
-            };
-        }
-
     }
 }

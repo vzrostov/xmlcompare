@@ -20,7 +20,7 @@ namespace XmlCompare
             Application.SetCompatibleTextRenderingDefault(false);
             //
             var mf = new MainForm();
-            var sp = new SettingsPresenter(mf);
+            var sp = new SettingsPresenter(mf, Settings.GetSettings());
             var cp = new ComparePresenter(mf, sp, new ReportPresenter());
             //
             Application.Run(mf);
