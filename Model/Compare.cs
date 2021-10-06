@@ -28,7 +28,7 @@ namespace XmlCompare.Model
 
         public bool HasDifferences { get; set; }
 
-        public TreeNode<TreeNodeContent> Differences { get; set; }
+        public TreeNode<TreeNodeContent> Data { get; set; }
         #endregion //ICompare
 
         static Compare instance = null;

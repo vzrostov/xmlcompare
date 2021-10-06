@@ -77,7 +77,7 @@ namespace XmlCompare.Presenter
                 return;
             }
             // get collection to set result
-            TreeNode<TreeNodeContent> ownerCollection = new TreeNode<TreeNodeContent>(new TreeNodeContent("", 0, 0, null));
+            TreeNode<TreeNodeContent> ownerCollection = new TreeNode<TreeNodeContent>(new TreeNodeContent("", NodeMode.TheSame, null));
 
             CompareView.Reset();
             CompareView.SetIsShowDifferences(CompareModel.SettingsModel.IsShowDifferences);
@@ -89,7 +89,7 @@ namespace XmlCompare.Presenter
                 RecursiveCompare(ownerCollection, CompareModel.Left?.Root, CompareModel.Right?.Root, out isDiff);
                 CompareModel.IsSuccessed = true;
                 CompareModel.HasDifferences = isDiff;
-                CompareModel.Differences = ownerCollection;
+                CompareModel.Data = ownerCollection;
                 CompareView.SetData(CompareModel);
             }
         }
@@ -118,7 +118,7 @@ namespace XmlCompare.Presenter
 
                 if (rights == null)
                 {
-                    CreateNode(ownerCollection, leftName, ElementRemoved, left, null);
+                    CreateNode(ownerCollection, leftName, NodeMode.ElementRemoved, left, null);
                     isDiff = true;
                     continue;
                 }
@@ -139,7 +139,7 @@ namespace XmlCompare.Presenter
                 else
                 {
                     isDiff = true;
-                    node.Value.SetIndexes(ElementChanged, ElementChanged);
+                    node.Value.Mode = NodeMode.ElementChanged;
                 }
             }
 
@@ -153,7 +153,7 @@ namespace XmlCompare.Presenter
                     continue;
                 }
 
-                CreateNode(ownerCollection, rName, ElementAdded, null, right);
+                CreateNode(ownerCollection, rName, NodeMode.ElementAdded, null, right);
                 isDiff = true;
             }
         }
@@ -168,20 +168,20 @@ namespace XmlCompare.Presenter
             IEnumerable<KeyValuePair<XAttribute, XAttribute>> both;
             IEnumerable<XAttribute> onlyRight;
             IEnumerable<XAttribute> onlyLeft;
-            var root = CreateNode(ownerCollection, "Attributes", 4, null, null);
+            var root = CreateNode(ownerCollection, "Attributes", NodeMode.Folder, null, null);
             var result = true;
 
             CompareAttributesDetails(left, right, out onlyLeft, out onlyRight, out both);
 
             foreach (var a in onlyLeft)
             {
-                CreateNode(root, a.Name.LocalName + " : " + a.Value, ElementRemoved, left, right);
+                CreateNode(root, a.Name.LocalName + " : " + a.Value, NodeMode.AttributeRemoved, left, right);
                 result = false;
             }
 
             foreach (var a in onlyRight)
             {
-                CreateNode(root, a.Name.LocalName + " : " + a.Value, ElementAdded, left, right);
+                CreateNode(root, a.Name.LocalName + " : " + a.Value, NodeMode.AttributeAdded, left, right);
                 result = false;
             }
 
@@ -189,7 +189,7 @@ namespace XmlCompare.Presenter
             {
                 var equal = a.Key.Value == a.Value.Value;
                 var text = equal ? a.Key.Value : string.Format("{0} -> {1}", a.Key.Value, a.Value.Value);
-                var node = CreateNode(root, a.Key.Name.LocalName + " : " + text, equal ? 0 : ElementChanged, left, right);
+                var node = CreateNode(root, a.Key.Name.LocalName + " : " + text, equal ? NodeMode.TheSame : NodeMode.AttributeChanged, left, right);
                 if (!equal)
                     result = false;
                 else
@@ -235,9 +235,9 @@ namespace XmlCompare.Presenter
         }
         #endregion //Comments
 
-        private TreeNode<TreeNodeContent> CreateNode(TreeNode<TreeNodeContent> collection, string text, int index, XElement e1, XElement e2)
+        private TreeNode<TreeNodeContent> CreateNode(TreeNode<TreeNodeContent> collection, string text, NodeMode mode, XElement e1, XElement e2)
         {
-            var node = collection.AddChild(new TreeNodeContent(text, index, index, new KeyValuePair<XElement, XElement>(e1, e2)));
+            var node = collection.AddChild(new TreeNodeContent(text, mode, new KeyValuePair<XElement, XElement>(e1, e2)));
             return node;
         }
 

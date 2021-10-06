@@ -20,6 +20,6 @@ namespace XmlCompare.Model
 
         bool IsSuccessed { get; }
 
-        TreeNode<TreeNodeContent> Differences { get; }
+        TreeNode<TreeNodeContent> Data { get; }
     }
 }

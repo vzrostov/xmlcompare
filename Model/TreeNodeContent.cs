@@ -4,32 +4,65 @@ using System.Xml.Linq;
 
 namespace XmlCompare.Model
 {
-    struct TreeNodeContent
+    public enum NodeMode
     {
-        public TreeNodeContent(string t, int i, int isel, KeyValuePair<XElement, XElement>? inf) : this()
+        TheSame,
+        Folder,
+        ElementAdded,
+        ElementRemoved,
+        ElementChanged,
+        AttributeAdded,
+        AttributeRemoved,
+        AttributeChanged,
+        CommentAdded,
+        CommentRemoved,
+        CommentChanged
+    }
+
+    class TreeNodeContent
+    {
+        public TreeNodeContent(string t, NodeMode m, KeyValuePair<XElement, XElement>? inf) //: this()
         {
             text = t;
-            index = i;
-            indexSelected = isel;
+            mode = m;
             info = inf;
         }
-  
+
         string text;
         public string Text { get { return text; } }
 
-        int index; // icon number
-        public int Index { get { return index; } }
-
-        int indexSelected; // icon number selected
-        public int IndexSelected { get { return indexSelected; } }
+        NodeMode mode;
+        public NodeMode Mode { get { return mode; } set { mode = value; } }
 
         KeyValuePair<XElement, XElement>? info; // two cmparable nodes
         public KeyValuePair<XElement, XElement>? Info { get { return info; } }
 
-        internal void SetIndexes(int ind, int indsel)
-        {
-            index = ind;
-            indexSelected = indsel;
+        public int Index 
+        { 
+            get 
+            { 
+                switch(mode)
+                {
+                    case (NodeMode.TheSame): 
+                        return 0;
+                    case (NodeMode.ElementAdded):
+                    case (NodeMode.AttributeAdded):
+                    case (NodeMode.CommentAdded):
+                        return 1;
+                    case (NodeMode.ElementRemoved):
+                    case (NodeMode.AttributeRemoved):
+                    case (NodeMode.CommentRemoved):
+                        return 2;
+                    case (NodeMode.ElementChanged):
+                    case (NodeMode.AttributeChanged):
+                    case (NodeMode.CommentChanged):
+                        return 3;
+                    case (NodeMode.Folder):
+                        return 4;
+                }
+                return 0; 
+            } 
         }
+        public int IndexSelected { get { return Index; } }
     }
 }

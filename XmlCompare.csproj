@@ -73,6 +73,7 @@
     <Compile Include="Model\ICompare.cs" />
     <Compile Include="Model\TreeNode.cs" />
     <Compile Include="Model\TreeNodeContent.cs" />
+    <Compile Include="Model\TreeNodeExtensions.cs" />
     <Compile Include="Presenter\ComparePresenter.cs" />
     <Compile Include="Presenter\HtmlWriter.cs" />
     <Compile Include="Presenter\IReportPresenter.cs" />

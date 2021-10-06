@@ -112,7 +112,7 @@ namespace XmlCompare.View
                 OnEqualFiles();
             if (treeView == null)
                 return;
-            TreeViewLogic.FillTree(treeView, result.Differences); // todo add onlyDiff
+            TreeViewLogic.FillTree(treeView, result.Data); // todo add onlyDiff
         }
         #endregion //ICompareView
 

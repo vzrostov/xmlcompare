@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Linq;
 using XmlCompare.Model;
 using XmlCompare.Presenter;
 using XmlCompare.View;
@@ -54,14 +55,16 @@ namespace XmlCompare.Tests
         }
 
         [Theory]
-        [InlineData(@"../../Tests/xml/oneelement.xml", "../../Tests/xml/oneelement.xml", true)]
-        [InlineData(@"../../Tests/xml/oneelement.xml", "../../Tests/xml/twoelements.xml", false)]
-        [InlineData(@"../../Tests/xml/twoelements.xml", "../../Tests/xml/oneelement.xml", false)]
-        [InlineData(@"../../Tests/xml/oneelement.xml", "../../Tests/xml/twoelements01.xml", false)]
-        [InlineData(@"../../Tests/xml/twoelements01.xml", "../../Tests/xml/oneelement.xml", false)]
-        [InlineData(@"../../Tests/xml/twoelements01.xml", "../../Tests/xml/threeelements01.xml", false)]
-        [InlineData(@"../../Tests/xml/threeelements01.xml", "../../Tests/xml/twoelements01.xml", false)]
-        void CompareSuccessed(string f1, string f2, bool isequal)
+        [InlineData(@"../../Tests/xml/oneelement.xml", "../../Tests/xml/oneelement.xml", true, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
+        [InlineData(@"../../Tests/xml/oneelement.xml", "../../Tests/xml/twoelements.xml", false, 0, 1, 0, 0, 0, 0, 0, 0, 0)]
+        [InlineData(@"../../Tests/xml/twoelements.xml", "../../Tests/xml/oneelement.xml", false, 0, 0, 1, 0, 0, 0, 0, 0, 0)]
+        [InlineData(@"../../Tests/xml/oneelement.xml", "../../Tests/xml/twoelements01.xml", false, 0, 1, 0, 0, 1, 0, 0, 0, 0)]
+        [InlineData(@"../../Tests/xml/twoelements01.xml", "../../Tests/xml/oneelement.xml", false, 0, 0, 1, 0, 0, 1, 0, 0, 0)]
+        [InlineData(@"../../Tests/xml/twoelements01.xml", "../../Tests/xml/threeelements012.xml", false, 0, 1, 0, 0, 0, 0, 0, 0, 0)]
+        [InlineData(@"../../Tests/xml/threeelements012.xml", "../../Tests/xml/twoelements01.xml", false, 0, 0, 1, 0, 0, 0, 0, 0, 0)]
+        [InlineData(@"../../Tests/xml/threeelements012-034.xml", "../../Tests/xml/threeelements012-012.xml", false, 0, 0, 0, 2, 0, 0, 0, 0, 0)]
+        [InlineData(@"../../Tests/xml/threeelements012-012.xml", "../../Tests/xml/threeelements012-034.xml", false, 0, 0, 0, 2, 0, 0, 0, 0, 0)]
+        void CompareSuccessed(string f1, string f2, bool isequal, params int[] metrics)
         {
             var mf = new MainForm(true);
             var settings = Settings.GetSettings();
@@ -71,11 +74,26 @@ namespace XmlCompare.Tests
             var sp = new SettingsPresenter(mf, settings);
             var cp = new ComparePresenter(mf, sp, null);
             // invoke comparing
-            MethodInfo dynMethod = cp.GetType().GetMethod("OnSettingsChanged",
-                BindingFlags.NonPublic | BindingFlags.Instance);
+            MethodInfo dynMethod = cp.GetType().GetMethod("OnSettingsChanged", BindingFlags.NonPublic | BindingFlags.Instance);
             dynMethod.Invoke(cp, new object[] { settings, true });
             Assert.True(cp.CompareResult.IsSuccessed);
             Assert.True(isequal? !cp.CompareResult.HasDifferences : cp.CompareResult.HasDifferences);
+            // checking
+            Assert.True(metrics.Length==9);
+            var ее = cp.CompareResult.Data.Flatten();
+            int[] metricsAfter = { 
+                cp.CompareResult.Data.FilterByMode(new[] { NodeMode.ElementChanged }).Count(),
+                cp.CompareResult.Data.FilterByMode(new[] { NodeMode.ElementAdded }).Count(),
+                cp.CompareResult.Data.FilterByMode(new[] { NodeMode.ElementRemoved }).Count(),
+                cp.CompareResult.Data.FilterByMode(new[] { NodeMode.AttributeChanged }).Count(),
+                cp.CompareResult.Data.FilterByMode(new[] { NodeMode.AttributeAdded }).Count(),
+                cp.CompareResult.Data.FilterByMode(new[] { NodeMode.AttributeRemoved }).Count(),
+                cp.CompareResult.Data.FilterByMode(new[] { NodeMode.CommentChanged }).Count(),
+                cp.CompareResult.Data.FilterByMode(new[] { NodeMode.CommentAdded }).Count(),
+                cp.CompareResult.Data.FilterByMode(new[] { NodeMode.CommentRemoved }).Count()
+            };
+            for(int i=0; i<9; i++)
+                Assert.True(metrics[i] == metricsAfter[i]);
         }
 
     }
