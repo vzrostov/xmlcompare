@@ -54,16 +54,23 @@ namespace XmlCompare.Tests
             Assert.False(cp.CompareResult.IsSuccessed);
         }
 
+        /// <summary>
+        /// Check successed comparing
+        /// </summary>
+        /// <param name="f1"></param>
+        /// <param name="f2"></param>
+        /// <param name="isequal">Two files are equal</param>
+        /// <param name="metrics">Count of nodes with definite mode. Size 9 - only diffmodes, size 11 - + DiffInside modes</param>
         [Theory]
-        [InlineData(@"../../Tests/xml/oneelement.xml", "../../Tests/xml/oneelement.xml", true, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
-        [InlineData(@"../../Tests/xml/oneelement.xml", "../../Tests/xml/twoelements.xml", false, 0, 1, 0, 0, 0, 0, 0, 0, 0)]
-        [InlineData(@"../../Tests/xml/twoelements.xml", "../../Tests/xml/oneelement.xml", false, 0, 0, 1, 0, 0, 0, 0, 0, 0)]
-        [InlineData(@"../../Tests/xml/oneelement.xml", "../../Tests/xml/twoelements01.xml", false, 0, 1, 0, 0, 1, 0, 0, 0, 0)]
-        [InlineData(@"../../Tests/xml/twoelements01.xml", "../../Tests/xml/oneelement.xml", false, 0, 0, 1, 0, 0, 1, 0, 0, 0)]
-        [InlineData(@"../../Tests/xml/twoelements01.xml", "../../Tests/xml/threeelements012.xml", false, 0, 1, 0, 0, 0, 0, 0, 0, 0)]
-        [InlineData(@"../../Tests/xml/threeelements012.xml", "../../Tests/xml/twoelements01.xml", false, 0, 0, 1, 0, 0, 0, 0, 0, 0)]
-        [InlineData(@"../../Tests/xml/threeelements012-034.xml", "../../Tests/xml/threeelements012-012.xml", false, 0, 0, 0, 2, 0, 0, 0, 0, 0)]
-        [InlineData(@"../../Tests/xml/threeelements012-012.xml", "../../Tests/xml/threeelements012-034.xml", false, 0, 0, 0, 2, 0, 0, 0, 0, 0)]
+        [InlineData(@"../../Tests/xml/oneelement.xml", "../../Tests/xml/oneelement.xml", true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
+        [InlineData(@"../../Tests/xml/oneelement.xml", "../../Tests/xml/twoelements.xml", false, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0)]
+        [InlineData(@"../../Tests/xml/twoelements.xml", "../../Tests/xml/oneelement.xml", false, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0)]
+        [InlineData(@"../../Tests/xml/oneelement.xml", "../../Tests/xml/twoelements01.xml", false, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 1)]
+        [InlineData(@"../../Tests/xml/twoelements01.xml", "../../Tests/xml/oneelement.xml", false, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1)]
+        [InlineData(@"../../Tests/xml/twoelements01.xml", "../../Tests/xml/threeelements012.xml", false, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0)]
+        [InlineData(@"../../Tests/xml/threeelements012.xml", "../../Tests/xml/twoelements01.xml", false, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0)]
+        [InlineData(@"../../Tests/xml/threeelements012-034.xml", "../../Tests/xml/threeelements012-012.xml", false, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2+1, 2)]
+        [InlineData(@"../../Tests/xml/threeelements012-012.xml", "../../Tests/xml/threeelements012-034.xml", false, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2+1, 2)]
         void CompareSuccessed(string f1, string f2, bool isequal, params int[] metrics)
         {
             var mf = new MainForm(true);
@@ -79,7 +86,7 @@ namespace XmlCompare.Tests
             Assert.True(cp.CompareResult.IsSuccessed);
             Assert.True(isequal? !cp.CompareResult.HasDifferences : cp.CompareResult.HasDifferences);
             // checking
-            Assert.True(metrics.Length==9);
+            Assert.True(metrics.Length==9 || metrics.Length == 11);
             var ее = cp.CompareResult.Data.Flatten();
             int[] metricsAfter = { 
                 cp.CompareResult.Data.FilterByMode(new[] { NodeMode.ElementChanged }).Count(),
@@ -92,7 +99,16 @@ namespace XmlCompare.Tests
                 cp.CompareResult.Data.FilterByMode(new[] { NodeMode.CommentAdded }).Count(),
                 cp.CompareResult.Data.FilterByMode(new[] { NodeMode.CommentRemoved }).Count()
             };
-            for(int i=0; i<9; i++)
+            if (metrics.Length == 11)
+            {
+                metricsAfter = metricsAfter.Concat(
+                    new int[]
+                    {
+                        cp.CompareResult.Data.FilterByMode(new[] { NodeMode.TheSameDiffInside }).Count(),
+                        cp.CompareResult.Data.FilterByMode(new[] { NodeMode.FolderDiffInside }).Count()
+                    }).ToArray();
+            }
+            for (int i=0; i< metrics.Length; i++)
                 Assert.True(metrics[i] == metricsAfter[i]);
         }
 

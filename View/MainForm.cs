@@ -19,6 +19,7 @@ namespace XmlCompare.View
         }
 
         bool isTest = false;
+        ICompare CompareResult { get; set; }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -53,7 +54,6 @@ namespace XmlCompare.View
         RichTextBox rTextBox = new RichTextBox();
 
         public event Action OnStart;
-        public event CheckAction OnShowDifferencesClick;
         public event Action OnChooseClick;
 
         public bool IsShowDifferences { get; set; }
@@ -106,19 +106,21 @@ namespace XmlCompare.View
                 RealSetTextFileNameInBox(tableLayoutPanelLow.GetControlFromPosition(1, 0) as RichTextBox, null);
         }
 
-        void ICompareView.SetData(ICompare result)
+        void ICompareView.SetData(ICompare res)
         {
-            if (!result.HasDifferences) // 
+            CompareResult = res;
+            if (!CompareResult.HasDifferences) // 
                 OnEqualFiles();
             if (treeView == null)
                 return;
-            TreeViewLogic.FillTree(treeView, result.Data); // todo add onlyDiff
+            TreeViewLogic.FillTree(treeView, CompareResult.Data, showDifferentButton.Checked); // todo add onlyDiff
         }
         #endregion //ICompareView
 
         private void showDifferentButton_Click(object sender, EventArgs e)
         {
-            OnShowDifferencesClick(showDifferentButton.Checked);
+            //OnShowDifferencesClick(showDifferentButton.Checked);
+            TreeViewLogic.FillTree(treeView, CompareResult.Data, showDifferentButton.Checked); // todo add onlyDiff
         }
 
         private void compareAgainToolStripMenuItem_Click(object sender, EventArgs e)

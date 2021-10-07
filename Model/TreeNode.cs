@@ -55,6 +55,13 @@ namespace XmlCompare.Model
                 child.Traverse(action);
         }
 
+        public void TraverseByNode(Action<TreeNode<T>> action)
+        {
+            action(this);
+            foreach (var child in _children)
+                child.TraverseByNode(action);
+        }
+
         public IEnumerable<T> Flatten()
         {
             return new[] { Value }.Concat(_children.SelectMany(x => x.Flatten()));

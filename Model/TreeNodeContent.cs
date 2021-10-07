@@ -7,7 +7,9 @@ namespace XmlCompare.Model
     public enum NodeMode
     {
         TheSame,
-        Folder,
+        TheSameDiffInside, // exist differences inside element
+        Folder, // common node for attributes
+        FolderDiffInside, // exist differences inside element
         ElementAdded,
         ElementRemoved,
         ElementChanged,
@@ -45,6 +47,8 @@ namespace XmlCompare.Model
                 {
                     case (NodeMode.TheSame): 
                         return 0;
+                    case (NodeMode.TheSameDiffInside):
+                        return 8;
                     case (NodeMode.ElementAdded):
                     case (NodeMode.AttributeAdded):
                     case (NodeMode.CommentAdded):
@@ -59,6 +63,8 @@ namespace XmlCompare.Model
                         return 3;
                     case (NodeMode.Folder):
                         return 4;
+                    case (NodeMode.FolderDiffInside):
+                        return 7;
                 }
                 return 0; 
             } 

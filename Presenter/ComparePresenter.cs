@@ -89,6 +89,7 @@ namespace XmlCompare.Presenter
                 RecursiveCompare(ownerCollection, CompareModel.Left?.Root, CompareModel.Right?.Root, out isDiff);
                 CompareModel.IsSuccessed = true;
                 CompareModel.HasDifferences = isDiff;
+                ownerCollection.MarkParentNodesByChildren();
                 CompareModel.Data = ownerCollection;
                 CompareView.SetData(CompareModel);
             }

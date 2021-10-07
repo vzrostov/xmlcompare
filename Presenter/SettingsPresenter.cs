@@ -21,7 +21,6 @@ namespace XmlCompare.Presenter
             SettingsView = sv;
             SettingsView.OnStart += OnStart;
             SettingsView.OnChooseClick += OnChooseClick;
-            SettingsView.OnShowDifferencesClick += OnShowDifferencesClick;
         }
 
         Settings SettingsModel;
