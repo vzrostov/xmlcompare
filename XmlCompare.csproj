@@ -71,6 +71,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\ICompare.cs" />
+    <Compile Include="Model\TreeNode.cs" />
+    <Compile Include="Model\TreeNodeContent.cs" />
+    <Compile Include="Model\TreeNodeExtensions.cs" />
     <Compile Include="Presenter\ComparePresenter.cs" />
     <Compile Include="Presenter\HtmlWriter.cs" />
     <Compile Include="Presenter\IReportPresenter.cs" />
@@ -79,6 +82,7 @@
     <Compile Include="Model\Settings.cs" />
     <Compile Include="Presenter\ReportPresenter.cs" />
     <Compile Include="Presenter\SettingsPresenter.cs" />
+    <Compile Include="Tests\CompareTest.cs" />
     <Compile Include="Tests\SettingsTest.cs" />
     <Compile Include="View\ICompareView.cs" />
     <Compile Include="Model\ISettings.cs" />
@@ -92,6 +96,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\TreeViewLogic.cs" />
     <EmbeddedResource Include="View\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>

@@ -1,8 +1,13 @@
 ﻿
 namespace XmlCompare.Model
 {
+    /// <summary>
+    /// Singleton for application settings
+    /// </summary>
     class Settings : ISettings
     {
+        private Settings() { }
+
         protected string leftFileName;
         public string LeftFileName {
             get { return leftFileName; } 
@@ -37,5 +42,22 @@ namespace XmlCompare.Model
                 Properties.Settings.Default.Save();
             }
         }
+
+        static Settings instance = null;
+        /// <summary>
+        /// Get Settings from saved state or make new one
+        /// </summary>
+        /// <returns></returns>
+        static public Settings GetSettings()
+        {
+            return instance ?? 
+            (instance = new Settings()
+            {
+                IsShowDifferences = Properties.Settings.Default.IsShowDifferences,
+                LeftFileName = Properties.Settings.Default.LeftFileName,
+                RightFileName = Properties.Settings.Default.RightFileName
+            });
+        }
+
     }
 }

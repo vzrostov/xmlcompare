@@ -10,7 +10,6 @@ namespace XmlCompare.View
     {
         event Action OnStart;
         event Action OnChooseClick; // button 1
-        event CheckAction OnShowDifferencesClick; // button 3
         // getter
         bool IsShowDifferences { get; set; }
     }

@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
+using XmlCompare.Model;
 
 namespace XmlCompare.View
 {
     public partial class MainForm : Form, ISettingsView, ICompareView
     {
-        public MainForm(bool isTest = false)
+        public MainForm(bool test = false)
         {
-            if(!isTest)
+            isTest = test;
+            if (!isTest)
                 InitializeComponent();
         }
+
+        bool isTest = false;
+        ICompare CompareResult { get; set; }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -51,15 +54,17 @@ namespace XmlCompare.View
         RichTextBox rTextBox = new RichTextBox();
 
         public event Action OnStart;
-        public event CheckAction OnShowDifferencesClick;
         public event Action OnChooseClick;
 
         public bool IsShowDifferences { get; set; }
 
         public void SetFileNames(string l, string r)
         {
-            RealSetTextFileNameInBox(tableLayoutPanelLow.GetControlFromPosition(0, 0) as RichTextBox, l);
-            RealSetTextFileNameInBox(tableLayoutPanelLow.GetControlFromPosition(1, 0) as RichTextBox, r);
+            if(tableLayoutPanelLow != null)
+            {
+                RealSetTextFileNameInBox(tableLayoutPanelLow.GetControlFromPosition(0, 0) as RichTextBox, l);
+                RealSetTextFileNameInBox(tableLayoutPanelLow.GetControlFromPosition(1, 0) as RichTextBox, r);
+            }
         }
 
         private void RealSetTextFileNameInBox(RichTextBox rb, string str)
@@ -73,47 +78,55 @@ namespace XmlCompare.View
 
         void ICompareView.SetIsShowDifferences(bool f)
         {
-            if (showDifferentButton.Checked != f)
-                showDifferentButton.Checked = f;
+            if (showDifferentButton != null)
+                if (showDifferentButton.Checked != f)
+                    showDifferentButton.Checked = f;
         }
         #endregion //ISettingsView
 
         #region ICompareView
-        public event Action OnChooseAgainClick;
+        public event Action OnCompareAgainClick;
         public event Action OnMakeReportClick;
-
-        TreeNodeCollection ICompareView.GetTreeNodeCollection() => treeView.Nodes;
 
         public void Reset()
         {
-            treeView.Nodes.Clear();
+            if(treeView != null)
+                treeView.Nodes.Clear();
         }
 
         public void OnFileLeftError()
         {
-            RealSetTextFileNameInBox(tableLayoutPanelLow.GetControlFromPosition(0, 0) as RichTextBox, null);
+            if (tableLayoutPanelLow != null)
+                RealSetTextFileNameInBox(tableLayoutPanelLow.GetControlFromPosition(0, 0) as RichTextBox, null);
         }
 
         public void OnFileRightError()
         {
-            RealSetTextFileNameInBox(tableLayoutPanelLow.GetControlFromPosition(1, 0) as RichTextBox, null);
+            if(tableLayoutPanelLow!=null)
+                RealSetTextFileNameInBox(tableLayoutPanelLow.GetControlFromPosition(1, 0) as RichTextBox, null);
         }
 
-        public void OnEqualFiles()
+        void ICompareView.SetData(ICompare res)
         {
-            //MessageBox.Show("Both files are identical");
+            CompareResult = res;
+            if (!CompareResult.HasDifferences) // 
+                OnEqualFiles();
+            if (treeView == null)
+                return;
+            TreeViewLogic.FillTree(treeView, CompareResult.Data, showDifferentButton.Checked); // todo add onlyDiff
         }
         #endregion //ICompareView
 
         private void showDifferentButton_Click(object sender, EventArgs e)
         {
-            OnShowDifferencesClick(showDifferentButton.Checked);
+            //OnShowDifferencesClick(showDifferentButton.Checked);
+            TreeViewLogic.FillTree(treeView, CompareResult.Data, showDifferentButton.Checked); // todo add onlyDiff
         }
 
-        private void replaceAgainToolStripMenuItem_Click(object sender, EventArgs e)
+        private void compareAgainToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(OnChooseAgainClick != null)
-                OnChooseAgainClick();
+            if(OnCompareAgainClick != null)
+                OnCompareAgainClick();
         }
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -147,7 +160,8 @@ namespace XmlCompare.View
 
         private void chooseComparingFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OnChooseClick();
+            if (OnChooseClick != null)
+                OnChooseClick();
         }
 
         private void makeReportButton_Click(object sender, EventArgs e)
@@ -159,6 +173,12 @@ namespace XmlCompare.View
         public void OnReportSaveError()
         {
             MessageBox.Show("Nothing to save in report");
+        }
+
+        public void OnEqualFiles()
+        {
+            if (!isTest)
+                MessageBox.Show("Both files are identical");
         }
     }
 }

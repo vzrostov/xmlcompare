@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Xml.Linq;
 using XmlCompare.Model;
 using XmlCompare.View;
@@ -17,19 +15,26 @@ namespace XmlCompare.Presenter
             CompareView = cv;
             ReportPresenter = rp;
             //
-            cv.OnMakeReportClick += OnMakeReportClick;
-            rp.OnReportSaveError += OnReportSaveError;
+            if (CompareView == null)
+                throw new ArgumentNullException();
+            if (settingsToCompare == null)
+                throw new ArgumentNullException();
+            CompareView.OnMakeReportClick += OnMakeReportClick;
+            CompareView.OnCompareAgainClick += OnCompareAgainClick;
+            if(ReportPresenter!=null)
+                ReportPresenter.OnReportSaveError += OnReportSaveError;
             settingsToCompare.OnSettingsChanged += OnSettingsChanged;
         }
 
-        Compare CompareModel = new Compare();
+        Compare CompareModel = Compare.GetCompare();
+        public ICompare CompareResult { get { return CompareModel; } }
         ICompareView CompareView;
         ReportPresenter ReportPresenter;
 
         #region ISettingsToCompare
         private void OnSettingsChanged(ISettings s, bool wasFilesChanged)
         {
-            if(wasFilesChanged)
+            if (wasFilesChanged)
             {
                 if (string.IsNullOrEmpty(s.LeftFileName))
                     return;
@@ -45,25 +50,48 @@ namespace XmlCompare.Presenter
                     CompareView.OnFileRightError();
                     return;
                 }
+            }
+            StartComparing(s);
+        }
 
+        private void StartComparing(ISettings s)
+        {
+            CompareModel.Reset();
+            CompareModel.SettingsModel = s;
+            try
+            {
                 CompareModel.Left = XDocument.Load(s.LeftFileName);
+            }
+            catch
+            {
+                CompareView.OnFileLeftError();
+                return;
+            }
+            try
+            {
                 CompareModel.Right = XDocument.Load(s.RightFileName);
             }
-
-            CompareModel.SettingsModel = s;
-            // get collection to set result
-            TreeNodeCollection ownerCollection = CompareView.GetTreeNodeCollection();
-            if (ownerCollection == null)
+            catch
+            {
+                CompareView.OnFileRightError();
                 return;
+            }
+            // get collection to set result
+            TreeNode<TreeNodeContent> ownerCollection = new TreeNode<TreeNodeContent>(new TreeNodeContent("", NodeMode.TheSame, null));
 
             CompareView.Reset();
-            CompareView.SetIsShowDifferences(s.IsShowDifferences);
-            if(CompareModel.IsValid())
+            CompareView.SetIsShowDifferences(CompareModel.SettingsModel.IsShowDifferences);
+            if (CompareModel.IsValid())
             {
-                CompareView.SetFileNames(s.LeftFileName, s.RightFileName);
-                bool eq = ShowCompareResults(ownerCollection, CompareModel.Left?.Root, CompareModel.Right?.Root);
-                if (eq)
-                    CompareView.OnEqualFiles();
+                CompareView.SetFileNames(CompareModel.SettingsModel.LeftFileName, CompareModel.SettingsModel.RightFileName);
+                // start of comparing
+                bool isDiff = false;
+                RecursiveCompare(ownerCollection, CompareModel.Left?.Root, CompareModel.Right?.Root, out isDiff);
+                CompareModel.IsSuccessed = true;
+                CompareModel.HasDifferences = isDiff;
+                ownerCollection.MarkParentNodesByChildren();
+                CompareModel.Data = ownerCollection;
+                CompareView.SetData(CompareModel);
             }
         }
         #endregion //ISettingsToCompare
@@ -73,13 +101,14 @@ namespace XmlCompare.Presenter
         private const int ElementRemoved = 2;
         private const int ElementChanged = 3;
 
-        private bool ShowCompareResults(TreeNodeCollection ownerCollection, XElement left, XElement right)
+        private void RecursiveCompare(TreeNode<TreeNodeContent> ownerCollection, XElement left, XElement right, out bool isDiff)
         {
-            var result = CompareAttrs(ownerCollection, left, right);
+            var resulta = CompareAttributes(ownerCollection, left, right);
+            var resultc = CompareComments(ownerCollection, left, right);
+            isDiff = (!resulta || !resultc);
 
             var leftElements = OrderByName(left);
             var rightElements = OrderByName(right);
-            TreeNode node;
             foreach (var leftName in leftElements.Keys)
             {
                 IEnumerable<XElement> lefts;
@@ -90,8 +119,8 @@ namespace XmlCompare.Presenter
 
                 if (rights == null)
                 {
-                    CreateNode(ownerCollection, leftName, ElementRemoved, left, null);
-                    result = false;
+                    CreateNode(ownerCollection, leftName, NodeMode.ElementRemoved, left, null);
+                    isDiff = true;
                     continue;
                 }
                 if (lefts.Count() > 1 || rights.Count() > 1)
@@ -100,15 +129,19 @@ namespace XmlCompare.Presenter
                     continue;
                 }
 
-                node = CreateNode(ownerCollection, leftName != string.Empty ? leftName : "No name", 0, lefts.First(), rights.First());
-                var res = ShowCompareResults(node.Nodes, lefts.First(), rights.First());
-                if (res)
+                TreeNode<TreeNodeContent> node = CreateNode(ownerCollection, leftName != string.Empty ? leftName : "No name", 0, lefts.First(), rights.First());
+                bool diff;
+                RecursiveCompare(node, lefts.First(), rights.First(), out diff);
+                if (!diff)
                 {
                     if (CompareModel.SettingsModel.IsShowDifferences)
-                        node.Remove();
+                        ownerCollection.RemoveChild(node);
                 }
                 else
-                    node.ImageIndex = node.SelectedImageIndex = ElementChanged;
+                {
+                    isDiff = true;
+                    node.Value.Mode = NodeMode.ElementChanged;
+                }
             }
 
             foreach (var rName in Subtract(rightElements.Keys, leftElements.Keys))
@@ -121,31 +154,35 @@ namespace XmlCompare.Presenter
                     continue;
                 }
 
-                CreateNode(ownerCollection, rName, ElementAdded, null, right);
-                result = false;
+                CreateNode(ownerCollection, rName, NodeMode.ElementAdded, null, right);
+                isDiff = true;
             }
-            return result;
         }
 
-        private bool CompareAttrs(TreeNodeCollection ownerCollection, XElement left, XElement right)
+        #region Attributes
+        /// <summary>
+        /// Compare only attributes for only one XML-node
+        /// </summary>
+        /// <returns>True if there was NO ANY differences</returns>
+        private bool CompareAttributes(TreeNode<TreeNodeContent> ownerCollection, XElement left, XElement right)
         {
             IEnumerable<KeyValuePair<XAttribute, XAttribute>> both;
             IEnumerable<XAttribute> onlyRight;
             IEnumerable<XAttribute> onlyLeft;
-            var root = CreateNode(ownerCollection, "Attributes", 4, null, null);
+            var root = CreateNode(ownerCollection, "Attributes", NodeMode.Folder, null, null);
             var result = true;
 
-            CompareAttributes(left, right, out onlyLeft, out onlyRight, out both);
+            CompareAttributesDetails(left, right, out onlyLeft, out onlyRight, out both);
 
             foreach (var a in onlyLeft)
             {
-                CreateNode(root.Nodes, a.Name.LocalName + " : " + a.Value, ElementRemoved, left, right);
+                CreateNode(root, a.Name.LocalName + " : " + a.Value, NodeMode.AttributeRemoved, left, right);
                 result = false;
             }
 
             foreach (var a in onlyRight)
             {
-                CreateNode(root.Nodes, a.Name.LocalName + " : " + a.Value, ElementAdded, left, right);
+                CreateNode(root, a.Name.LocalName + " : " + a.Value, NodeMode.AttributeAdded, left, right);
                 result = false;
             }
 
@@ -153,47 +190,21 @@ namespace XmlCompare.Presenter
             {
                 var equal = a.Key.Value == a.Value.Value;
                 var text = equal ? a.Key.Value : string.Format("{0} -> {1}", a.Key.Value, a.Value.Value);
-                var node = CreateNode(root.Nodes, a.Key.Name.LocalName + " : " + text, equal ? 0 : ElementChanged, left, right);
+                var node = CreateNode(root, a.Key.Name.LocalName + " : " + text, equal ? NodeMode.TheSame : NodeMode.AttributeChanged, left, right);
                 if (!equal)
                     result = false;
                 else
                     if (CompareModel.SettingsModel.IsShowDifferences)
-                    node.Remove();
+                        ownerCollection.RemoveChild(node);
             }
 
-            if (root.Nodes.Count == 0)
-                root.Remove();
+            if (!root.Children.Any())
+                ownerCollection.RemoveChild(root);
 
             return result;
         }
 
-        private TreeNode CreateNode(TreeNodeCollection collection, string text, int index, XElement e1, XElement e2)
-        {
-            var node = collection.Add(text, text, index, index);
-            node.Tag = new KeyValuePair<XElement, XElement>(e1, e2);
-            return node;
-        }
-
-        private static IDictionary<string, IEnumerable<XElement>> OrderByName(XElement left)
-        {
-            var cc = (from e in left.Elements()
-                      let nameA = e.Attribute("NAME")
-                      let name = nameA != null ? nameA.Value : string.Empty
-                      orderby name
-                      group e by name).ToDictionary(r => r.Key, r => r.Where(a => true));
-            var ее = (from e in left.Elements()
-                      let nameA = e.Attribute("NAME")
-                      let name = nameA != null ? nameA.Value : string.Empty
-                      orderby name
-                      group e by name);
-            return (from e in left.Elements()
-                    let nameA = e.Attribute("NAME")
-                    let name = nameA != null ? nameA.Value : string.Empty
-                    orderby name
-                    group e by name).ToDictionary(r => r.Key, r => r.Where(a => true));
-        }
-
-        private void CompareAttributes(XElement left, XElement right, out IEnumerable<XAttribute> onlyLeft, out IEnumerable<XAttribute> onlyRight, out IEnumerable<KeyValuePair<XAttribute, XAttribute>> both)
+        private void CompareAttributesDetails(XElement left, XElement right, out IEnumerable<XAttribute> onlyLeft, out IEnumerable<XAttribute> onlyRight, out IEnumerable<KeyValuePair<XAttribute, XAttribute>> both)
         {
             IList<XAttribute> l = new List<XAttribute>();
             IList<XAttribute> r = new List<XAttribute>();
@@ -216,6 +227,39 @@ namespace XmlCompare.Presenter
             onlyRight = r;
             both = b;
         }
+        #endregion //Attributes
+
+        #region Comments
+        private bool CompareComments(TreeNode<TreeNodeContent> ownerCollection, XElement left, XElement right)
+        {
+            return true;
+        }
+        #endregion //Comments
+
+        private TreeNode<TreeNodeContent> CreateNode(TreeNode<TreeNodeContent> collection, string text, NodeMode mode, XElement e1, XElement e2)
+        {
+            var node = collection.AddChild(new TreeNodeContent(text, mode, new KeyValuePair<XElement, XElement>(e1, e2)));
+            return node;
+        }
+
+        private static IDictionary<string, IEnumerable<XElement>> OrderByName(XElement left)
+        {
+            var cc = (from e in left.Elements()
+                      let nameA = e.Attribute("NAME")
+                      let name = nameA != null ? nameA.Value : string.Empty
+                      orderby name
+                      group e by name).ToDictionary(r => r.Key, r => r.Where(a => true));
+            var ее = (from e in left.Elements()
+                      let nameA = e.Attribute("NAME")
+                      let name = nameA != null ? nameA.Value : string.Empty
+                      orderby name
+                      group e by name);
+            return (from e in left.Elements()
+                    let nameA = e.Attribute("NAME")
+                    let name = nameA != null ? nameA.Value : string.Empty
+                    orderby name
+                    group e by name).ToDictionary(r => r.Key, r => r.Where(a => true));
+        }
 
         private IEnumerable<T> Subtract<T>(IEnumerable<T> s1, IEnumerable<T> s2)
         {
@@ -223,16 +267,22 @@ namespace XmlCompare.Presenter
         }
         #endregion //Logic
 
-        #region Report
+        #region ICompareView events
         void OnMakeReportClick()
         {
             ReportPresenter.OnMakeReportClick(CompareModel);
         }
+
         void OnReportSaveError()
         {
             CompareView.OnReportSaveError();
         }
-        #endregion //Report
+
+        private void OnCompareAgainClick()
+        {
+            StartComparing(CompareModel.SettingsModel);
+        }
+        #endregion //ICompareView events
 
     }
 }
