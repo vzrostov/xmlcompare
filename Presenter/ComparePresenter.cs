@@ -78,9 +78,7 @@ namespace XmlCompare.Presenter
             }
             // get collection to set result
             TreeNode<TreeNodeContent> ownerCollection = new TreeNode<TreeNodeContent>(new TreeNodeContent("", NodeMode.TheSame, null));
-
             CompareView.Reset();
-            CompareView.SetIsShowDifferences(CompareModel.SettingsModel.IsShowDifferences);
             if (CompareModel.IsValid())
             {
                 CompareView.SetFileNames(CompareModel.SettingsModel.LeftFileName, CompareModel.SettingsModel.RightFileName);
@@ -108,14 +106,16 @@ namespace XmlCompare.Presenter
             var resultt = CompareTexts(ownerCollection, left, right);
             isDiff = (!resulta || !resultc || !resultt);
 
-            var leftElements = OrderByName(left);
-            var rightElements = OrderByName(right);
+            // make left parts
+            var leftElements = OrderByRules(left);
+            var rightElements = OrderByRules(right);
+            // element diff mode defining 
             foreach (var leftName in leftElements.Keys)
             {
-                IEnumerable<XElement> lefts;
+                XElement lefts;
                 leftElements.TryGetValue(leftName, out lefts);
 
-                IEnumerable<XElement> rights;
+                XElement rights;
                 rightElements.TryGetValue(leftName, out rights);
 
                 if (rights == null)
@@ -124,19 +124,12 @@ namespace XmlCompare.Presenter
                     isDiff = true;
                     continue;
                 }
-                if (lefts.Count() > 1 || rights.Count() > 1)
-                {
-                    //несравнимые по имени
-                    continue;
-                }
 
-                TreeNode<TreeNodeContent> node = CreateNode(ownerCollection, leftName != string.Empty ? leftName : "No name", 0, lefts.First(), rights.First());
+                TreeNode<TreeNodeContent> node = CreateNode(ownerCollection, leftName != string.Empty ? leftName : "No name", 0, lefts, rights);
                 bool diff;
-                RecursiveCompare(node, lefts.First(), rights.First(), out diff);
+                RecursiveCompare(node, lefts, rights, out diff);
                 if (!diff)
                 {
-                    if (CompareModel.SettingsModel.IsShowDifferences)
-                        ownerCollection.RemoveChild(node);
                 }
                 else
                 {
@@ -147,13 +140,8 @@ namespace XmlCompare.Presenter
 
             foreach (var rName in Subtract(rightElements.Keys, leftElements.Keys))
             {
-                IEnumerable<XElement> rights;
+                XElement rights;
                 rightElements.TryGetValue(rName, out rights);
-                if (rights.Count() > 1)
-                {
-                    //несравнимые по имени
-                    continue;
-                }
 
                 CreateNode(ownerCollection, rName, NodeMode.ElementAdded, null, right);
                 isDiff = true;
@@ -215,9 +203,6 @@ namespace XmlCompare.Presenter
                 var node = CreateNode(root, a.Key.Name.LocalName + " : " + text, equal ? NodeMode.TheSame : NodeMode.AttributeChanged, left, right);
                 if (!equal)
                     result = false;
-                else
-                    if (CompareModel.SettingsModel.IsShowDifferences)
-                        ownerCollection.RemoveChild(node);
             }
 
             if (!root.Children.Any())
@@ -264,23 +249,25 @@ namespace XmlCompare.Presenter
             return node;
         }
 
-        private static IDictionary<string, IEnumerable<XElement>> OrderByName(XElement left)
+        private static string FormatLeftStringName(XElement el, string[] attrs)
         {
-            var cc = (from e in left.Elements()
-                      let nameA = e.Attribute("NAME")
-                      let name = nameA != null ? nameA.Value : string.Empty
-                      orderby name
-                      group e by name).ToDictionary(r => r.Key, r => r.Where(a => true));
-            var ее = (from e in left.Elements()
-                      let nameA = e.Attribute("NAME")
-                      let name = nameA != null ? nameA.Value : string.Empty
-                      orderby name
-                      group e by name);
-            return (from e in left.Elements()
-                    let nameA = e.Attribute("NAME")
-                    let name = nameA != null ? nameA.Value : string.Empty
-                    orderby name
-                    group e by name).ToDictionary(r => r.Key, r => r.Where(a => true));
+            //var nameA = el.Attribute("NAME");
+            var nameE = el.Name != null ? el.Name.LocalName : string.Empty;
+            //var name = nameA != null ? nameA.Value : string.Empty;
+            return nameE;
+        }
+
+        private static IDictionary<string, XElement> OrderByRules(XElement left)
+        {
+            var groupped = (from e in left.Elements()
+                            let name = FormatLeftStringName(e, null)
+                            orderby name
+                            group e by name);
+            var flatten = groupped.SelectMany(g =>
+            {
+                return g.Select((r, i) => new { key = i==0? g.Key : g.Key + " [#" + (i+1) + "]", val = r } );
+            });
+            return flatten.ToDictionary(r => r.key, r => r.val);
         }
 
         private IEnumerable<T> Subtract<T>(IEnumerable<T> s1, IEnumerable<T> s2)

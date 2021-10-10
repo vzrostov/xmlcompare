@@ -25,7 +25,7 @@ namespace XmlCompare.Model
 
     class TreeNodeContent
     {
-        public TreeNodeContent(string t, NodeMode m, KeyValuePair<XElement, XElement>? inf) //: this()
+        public TreeNodeContent(string t, NodeMode m, KeyValuePair<XElement, XElement>? inf) 
         {
             text = t;
             mode = m;
@@ -75,6 +75,7 @@ namespace XmlCompare.Model
                 return 0; 
             } 
         }
+
         public int IndexSelected { get { return Index; } }
     }
 }

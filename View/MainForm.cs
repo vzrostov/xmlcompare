@@ -76,12 +76,6 @@ namespace XmlCompare.View
             rb.SelectionAlignment = HorizontalAlignment.Center;
         }
 
-        void ICompareView.SetIsShowDifferences(bool f)
-        {
-            if (showDifferentButton != null)
-                if (showDifferentButton.Checked != f)
-                    showDifferentButton.Checked = f;
-        }
         #endregion //ISettingsView
 
         #region ICompareView
@@ -119,8 +113,7 @@ namespace XmlCompare.View
 
         private void showDifferentButton_Click(object sender, EventArgs e)
         {
-            //OnShowDifferencesClick(showDifferentButton.Checked);
-            TreeViewLogic.FillTree(treeView, CompareResult.Data, showDifferentButton.Checked); // todo add onlyDiff
+            TreeViewLogic.FillTree(treeView, CompareResult.Data, showDifferentButton.Checked); 
         }
 
         private void compareAgainToolStripMenuItem_Click(object sender, EventArgs e)

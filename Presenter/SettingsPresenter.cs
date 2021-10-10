@@ -60,11 +60,5 @@ namespace XmlCompare.Presenter
 
             OnSettingsChanged(SettingsModel, true);
         }
-
-        void OnShowDifferencesClick(bool check)
-        {
-            SettingsModel.IsShowDifferences = check;
-            OnSettingsChanged(SettingsModel, false);
-        }
     }
 }

@@ -35,6 +35,8 @@ namespace XmlCompare.View
                 return false;
             if (NodeMode.TheSame == mode)
                 return false;
+            if (NodeMode.ElementText == mode)
+                return false;
             return true;
         }
     }
