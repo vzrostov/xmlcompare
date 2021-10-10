@@ -13,6 +13,8 @@ namespace XmlCompare.Model
         ElementAdded,
         ElementRemoved,
         ElementChanged,
+        ElementText, // text inside element <E>Text</E>
+        ElementTextChanged,
         AttributeAdded,
         AttributeRemoved,
         AttributeChanged,
@@ -45,7 +47,7 @@ namespace XmlCompare.Model
             { 
                 switch(mode)
                 {
-                    case (NodeMode.TheSame): 
+                    case (NodeMode.TheSame):
                         return 0;
                     case (NodeMode.TheSameDiffInside):
                         return 8;
@@ -65,6 +67,10 @@ namespace XmlCompare.Model
                         return 4;
                     case (NodeMode.FolderDiffInside):
                         return 7;
+                    case (NodeMode.ElementTextChanged):
+                        return 9;
+                    case (NodeMode.ElementText):
+                        return 10;
                 }
                 return 0; 
             } 

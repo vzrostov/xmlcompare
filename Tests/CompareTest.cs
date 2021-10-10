@@ -71,6 +71,10 @@ namespace XmlCompare.Tests
         [InlineData(@"../../Tests/xml/threeelements012.xml", "../../Tests/xml/twoelements01.xml", false, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0)]
         [InlineData(@"../../Tests/xml/threeelements012-034.xml", "../../Tests/xml/threeelements012-012.xml", false, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2+1, 2)]
         [InlineData(@"../../Tests/xml/threeelements012-012.xml", "../../Tests/xml/threeelements012-034.xml", false, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2+1, 2)]
+        [InlineData(@"../../Tests/xml/twoelementsTextInside.xml", "../../Tests/xml/twoelementsTextInsideEq.xml", true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
+        [InlineData(@"../../Tests/xml/twoelementsTextInsideEq.xml", "../../Tests/xml/twoelementsTextInside.xml", true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
+        [InlineData(@"../../Tests/xml/twoelementsTextInside.xml", "../../Tests/xml/twoelementsTextInsideNEq.xml", false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
+        [InlineData(@"../../Tests/xml/twoelementsTextInsideNEq.xml", "../../Tests/xml/twoelementsTextInside.xml", false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
         void CompareSuccessed(string f1, string f2, bool isequal, params int[] metrics)
         {
             var mf = new MainForm(true);

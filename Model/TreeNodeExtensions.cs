@@ -20,9 +20,14 @@ namespace XmlCompare.Model
             root.TraverseByNode(_ => MarkParentNodes(_));
         }
 
+        private static bool IsNormal(NodeMode mode)
+        {
+            return ((mode != NodeMode.TheSame) && (mode != NodeMode.Folder) && (mode != NodeMode.ElementText));
+        }
+
         private static void MarkParentNodes(TreeNode<TreeNodeContent> node)
         {
-            if((node.Value.Mode != NodeMode.TheSame) && (node.Value.Mode != NodeMode.Folder)) // our node has any diff
+            if(IsNormal(node.Value.Mode)) // our node has any diff
             {
                 if(node.Parent != null && (node.Parent.Value.Mode == NodeMode.TheSame)) // we found parent node with no *DiffInside modes
                 {

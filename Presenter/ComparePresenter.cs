@@ -105,7 +105,8 @@ namespace XmlCompare.Presenter
         {
             var resulta = CompareAttributes(ownerCollection, left, right);
             var resultc = CompareComments(ownerCollection, left, right);
-            isDiff = (!resulta || !resultc);
+            var resultt = CompareTexts(ownerCollection, left, right);
+            isDiff = (!resulta || !resultc || !resultt);
 
             var leftElements = OrderByName(left);
             var rightElements = OrderByName(right);
@@ -158,6 +159,27 @@ namespace XmlCompare.Presenter
                 isDiff = true;
             }
         }
+
+        #region Text
+        /// <summary>
+        /// Compare only text for only one XML-node
+        /// </summary>
+        /// <returns>True if there was NO differences</returns>
+        private bool CompareTexts(TreeNode<TreeNodeContent> ownerCollection, XElement left, XElement right)
+        {
+            if((left.Value==null) && (right.Value == null)) // If they are absent, then we do not create any nodes.
+                return true;
+            if(false) // TODO add setiing for it
+            if (left.HasElements && right.HasElements) // check only if all of them are leafs
+                return true;
+            //TODO add comparing wo child info
+            // ...
+            var result = String.Equals(left.Value, right.Value);
+            CreateNode(ownerCollection, "Texts", result? NodeMode.ElementText : NodeMode.ElementTextChanged,
+                left, right);
+            return result;
+        }
+        #endregion // Text
 
         #region Attributes
         /// <summary>
