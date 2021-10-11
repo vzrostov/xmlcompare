@@ -95,10 +95,6 @@ namespace XmlCompare.Presenter
         #endregion //ISettingsToCompare
 
         #region Logic
-        private const int ElementAdded = 1;
-        private const int ElementRemoved = 2;
-        private const int ElementChanged = 3;
-
         private void RecursiveCompare(TreeNode<TreeNodeContent> ownerCollection, XElement left, XElement right, out bool isDiff)
         {
             var resulta = CompareAttributes(ownerCollection, left, right);
