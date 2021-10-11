@@ -154,13 +154,16 @@ namespace XmlCompare.Presenter
             if((left.Value==null) && (right.Value == null)) // If they are absent, then we do not create any nodes.
                 return true;
             if(false) // TODO add setiing for it
-            if (left.HasElements && right.HasElements) // check only if all of them are leafs
+            if(left.HasElements && right.HasElements) // check only if all of them are leafs
                 return true;
             //TODO add comparing wo child info
             // ...
+            //TODO use Trim
+            // ...
             var result = String.Equals(left.Value, right.Value);
-            CreateNode(ownerCollection, "Texts", result? NodeMode.ElementText : NodeMode.ElementTextChanged,
-                left, right);
+            if(left.Value.Length!=0 && right.Value.Length != 0)
+                CreateNode(ownerCollection, "Texts", result? NodeMode.ElementText : NodeMode.ElementTextChanged,
+                    left, right);
             return result;
         }
         #endregion // Text

@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System.Text;
+using System.Xml.Linq;
 
 namespace XmlCompare.Model
 {
@@ -39,6 +40,22 @@ namespace XmlCompare.Model
         static public Compare GetCompare()
         {
             return instance ?? (instance = new Compare());
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder("");
+            printNode(Data, 0, ref sb);
+            return sb.ToString();
+        }
+        
+        void printNode(TreeNode<TreeNodeContent> node, int level, ref StringBuilder stringBuilder)
+        {
+            stringBuilder.AppendLine(new string(' ', level*2) + "[" + node.Value.Mode.ToString() + "] " + node.Value.Text);
+            foreach (var n in node.Children)
+            {
+                printNode(n, level + 1, ref stringBuilder);
+            }
         }
     }
 }

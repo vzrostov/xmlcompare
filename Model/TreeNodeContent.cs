@@ -77,5 +77,21 @@ namespace XmlCompare.Model
         }
 
         public int IndexSelected { get { return Index; } }
+
+        internal static bool IsModeOfDifferences(NodeMode mode)
+        {
+            if (NodeMode.Folder == mode)
+                return false;
+            if (NodeMode.TheSame == mode)
+                return false;
+            if (NodeMode.ElementText == mode)
+                return false;
+            return true;
+        }
+
+        public override string ToString()
+        {
+            return Mode.ToString();
+        }
     }
 }

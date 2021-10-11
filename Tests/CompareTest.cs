@@ -4,6 +4,7 @@ using XmlCompare.Model;
 using XmlCompare.Presenter;
 using XmlCompare.View;
 using Xunit;
+using System.Diagnostics;
 
 namespace XmlCompare.Tests
 {
@@ -75,6 +76,8 @@ namespace XmlCompare.Tests
         [InlineData(@"../../Tests/xml/twoelementsTextInsideEq.xml", "../../Tests/xml/twoelementsTextInside.xml", true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
         [InlineData(@"../../Tests/xml/twoelementsTextInside.xml", "../../Tests/xml/twoelementsTextInsideNEq.xml", false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
         [InlineData(@"../../Tests/xml/twoelementsTextInsideNEq.xml", "../../Tests/xml/twoelementsTextInside.xml", false, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
+        [InlineData(@"../../Tests/xml/hierarchy1.xml", "../../Tests/xml/hierarchy2.xml", false, 6, 2, 1, 1, 0, 1, 0, 0, 0, 1, 2)]
+        [InlineData(@"../../Tests/xml/hierarchy2.xml", "../../Tests/xml/hierarchy1.xml", false, 6, 1, 2, 1, 1, 0, 0, 0, 0, 1, 2)]
         void CompareSuccessed(string f1, string f2, bool isequal, params int[] metrics)
         {
             var mf = new MainForm(true);
@@ -112,6 +115,7 @@ namespace XmlCompare.Tests
                         cp.CompareResult.Data.FilterByMode(new[] { NodeMode.FolderDiffInside }).Count()
                     }).ToArray();
             }
+            Debug.WriteLine(cp.CompareResult);
             for (int i=0; i< metrics.Length; i++)
                 Assert.True(metrics[i] == metricsAfter[i]);
         }
