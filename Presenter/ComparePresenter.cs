@@ -27,6 +27,7 @@ namespace XmlCompare.Presenter
             settingsToCompare.OnSettingsChanged += OnSettingsChanged;
         }
 
+        private const string NoNameForElement = "No name";
         Compare CompareModel = Compare.GetCompare();
         public ICompare CompareResult { get { return CompareModel; } }
         ICompareView CompareView;
@@ -78,7 +79,7 @@ namespace XmlCompare.Presenter
                 return;
             }
             // get collection to set result
-            TreeNode<TreeNodeContent> ownerCollection = new TreeNode<TreeNodeContent>(new TreeNodeContent("", NodeMode.TheSame, null));
+            TreeNode<TreeNodeContent> ownerCollection = null;
             CompareView.Reset();
             if (CompareModel.IsValid())
             {
@@ -86,7 +87,7 @@ namespace XmlCompare.Presenter
                 // start of comparing
                 bool isGlobalDiff = false; // whether if any diffs at all
                 bool isInsideDiff = false; // whether if next inner level has diffs 
-                RecursiveCompare(ownerCollection, CompareModel.Left?.Root, CompareModel.Right?.Root, out isGlobalDiff, out isInsideDiff);
+                RecursiveCompare(ref ownerCollection, CompareModel.Left?.Root, CompareModel.Right?.Root, out isGlobalDiff, out isInsideDiff);
                 CompareModel.IsSuccessed = true;
                 CompareModel.HasDifferences = isGlobalDiff;
                 ownerCollection.MarkParentNodesByChildren();
@@ -97,16 +98,29 @@ namespace XmlCompare.Presenter
         #endregion //ISettingsToCompare
 
         #region Logic
-        private void RecursiveCompare(TreeNode<TreeNodeContent> ownerCollection, XElement left, XElement right, out bool isGlobalDiff, out bool isInsideDiff)
+        private void RecursiveCompare(ref TreeNode<TreeNodeContent> ownerCollection, XElement left, XElement right, out bool isGlobalDiff, out bool isInsideDiff)
         {
+            if (ownerCollection==null) // make a root node
+            {
+                bool isIgnoreDifferentRoots = true;
+                var lrootname = left.Name != null ? left.Name.LocalName : NoNameForElement;
+                var rrootname = right.Name != null ? right.Name.LocalName : NoNameForElement;
+                if (!isIgnoreDifferentRoots)
+                    if (!String.Equals(lrootname, rrootname))
+                        ; // TODO
+                var rootname = (String.Equals(lrootname, rrootname)) ? lrootname : lrootname + " - " + rrootname;
+                // get collection to set result
+                ownerCollection = new TreeNode<TreeNodeContent>(new TreeNodeContent(rootname, NodeMode.TheSame, null));
+            }
+
+            var leftElements = OrderByRules(left);
+            var rightElements = OrderByRules(right);
+
             var resulta = CompareAttributes(ownerCollection, left, right);
             var resultc = CompareComments(ownerCollection, left, right);
             var resultt = CompareTexts(ownerCollection, left, right);
             isInsideDiff = isGlobalDiff = (!resulta || !resultc || !resultt);
 
-            // make left parts
-            var leftElements = OrderByRules(left);
-            var rightElements = OrderByRules(right);
             // element diff mode defining 
             foreach (var leftName in leftElements.Keys)
             {
@@ -124,11 +138,11 @@ namespace XmlCompare.Presenter
                 }
 
                 // make a basic node
-                TreeNode<TreeNodeContent> node = CreateNode(ownerCollection, leftName != string.Empty ? leftName : "No name", 0, lefts, rights);
-                // work out children nodes
+                TreeNode<TreeNodeContent> node = CreateNode(ownerCollection, leftName != string.Empty ? leftName : NoNameForElement, 0, lefts, rights);
+                // recursive work out children nodes
                 bool globaldiff;
                 bool insidediff;
-                RecursiveCompare(node, lefts, rights, out globaldiff, out insidediff);
+                RecursiveCompare(ref node, lefts, rights, out globaldiff, out insidediff);
                 if (globaldiff)
                     isGlobalDiff = true;
                 if (insidediff)

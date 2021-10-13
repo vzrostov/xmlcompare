@@ -39,6 +39,7 @@ namespace XmlCompare.Tests
         [InlineData(@"../../Tests/xml/onlyheader.xml", "../../Tests/xml/oneelement.xml")]
         [InlineData(@"../../Tests/xml/oneelement.xml", "../../Tests/xml/onlyheader.xml")]
         [InlineData(@"../../Tests/xml/onlyheader.xml", "../../Tests/xml/onlyheader.xml")]
+        [InlineData(@"../../Tests/xml/tworoots.xml", "../../Tests/xml/root1.xml")]
         void CompareForCorrupted(string f1, string f2)
         {
             var mf = new MainForm(true);
@@ -82,6 +83,8 @@ namespace XmlCompare.Tests
         [InlineData(@"../../Tests/xml/hierarchy2.xml", "../../Tests/xml/hierarchy1.xml", false, 4, 1, 2, 1, 1, 0, 0, 0, 0, 0, 3, 2)]
         [InlineData(@"../../Tests/xml/hierarchy1.xml", "../../Tests/xml/hierarchyroot.xml", false, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1)]
         [InlineData(@"../../Tests/xml/hierarchyroot.xml", "../../Tests/xml/hierarchy1.xml", false, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1)]
+        [InlineData(@"../../Tests/xml/root1.xml", "../../Tests/xml/root2.xml", true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
+        [InlineData(@"../../Tests/xml/root2.xml", "../../Tests/xml/root1.xml", true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
         void CompareSuccessed(string f1, string f2, bool isequal, params int[] metrics)
         {
             var mf = new MainForm(true);
