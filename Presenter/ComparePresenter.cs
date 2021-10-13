@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
 using XmlCompare.Model;
 using XmlCompare.View;
@@ -156,23 +157,17 @@ namespace XmlCompare.Presenter
         {
             if((left.Value==null) && (right.Value == null)) // If they are absent, then we do not create any nodes.
                 return true;
-            if(false) // TODO add setiing for it
-            if(left.HasElements && right.HasElements) // check only if all of them are leafs
-                return true;
-            /*
-             * var textValues = element.Nodes()
-                        .Where(n => n.NodeType == XmlNodeType.Text)
-                        .Select(n => n.ToString().Trim());
+            bool isTrim = false; // TODO
+            bool isCaseSensitive = false; // TODO
 
-                string value = string.Join("", textValues); // value is:   This is a test value
+            // get the value of text casting off descendants
+            var ltextcoll = left.Nodes().Where(n => n.NodeType == XmlNodeType.Text).Select(n => isTrim ? n.ToString().Trim() : n.ToString());
+            var ltext = String.Join("", ltextcoll);
+            var rtextcoll = right.Nodes().Where(n => n.NodeType == XmlNodeType.Text).Select(n => isTrim ? n.ToString().Trim() : n.ToString());
+            var rtext = String.Join("", rtextcoll);
 
-             * */
-            //TODO add comparing wo child info
-            // ...
-            //TODO use Trim
-            // ...
-            var result = String.Equals(left.Value, right.Value);
-            if(left.Value.Length!=0 || right.Value.Length != 0)
+            var result = String.Equals(ltext, rtext);
+            if(ltext.Length!=0 || rtext.Length != 0)
                 CreateNode(ownerCollection, "Texts", result? NodeMode.ElementText : NodeMode.ElementTextChanged,
                     left, right);
             return result;
@@ -261,6 +256,7 @@ namespace XmlCompare.Presenter
 
         private static string FormatLeftStringName(XElement el, string[] attrs)
         {
+            bool isCaseSensitive = false; // TODO
             //var nameA = el.Attribute("NAME");
             var nameE = el.Name != null ? el.Name.LocalName : string.Empty;
             //var name = nameA != null ? nameA.Value : string.Empty;
