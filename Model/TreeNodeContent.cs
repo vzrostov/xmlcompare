@@ -18,6 +18,7 @@ namespace XmlCompare.Model
         AttributeAdded,
         AttributeRemoved,
         AttributeChanged,
+        Comment,
         CommentAdded,
         CommentRemoved,
         CommentChanged
@@ -71,6 +72,8 @@ namespace XmlCompare.Model
                         return 9;
                     case (NodeMode.ElementText):
                         return 10;
+                    case (NodeMode.Comment):
+                        return 11;
                 }
                 return 0; 
             } 
@@ -85,6 +88,8 @@ namespace XmlCompare.Model
             if (NodeMode.TheSame == mode)
                 return false;
             if (NodeMode.ElementText == mode)
+                return false;
+            if (NodeMode.Comment == mode)
                 return false;
             return true;
         }

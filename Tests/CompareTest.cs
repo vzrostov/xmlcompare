@@ -85,6 +85,8 @@ namespace XmlCompare.Tests
         [InlineData(@"../../Tests/xml/hierarchyroot.xml", "../../Tests/xml/hierarchy1.xml", false, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1)]
         [InlineData(@"../../Tests/xml/root1.xml", "../../Tests/xml/root2.xml", true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
         [InlineData(@"../../Tests/xml/root2.xml", "../../Tests/xml/root1.xml", true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)]
+        [InlineData(@"../../Tests/xml/comment2.xml", "../../Tests/xml/comment1.xml", false, 3, 0, 0, 0, 0, 0, 2, 1, 1, 0, 1, 0)]
+        [InlineData(@"../../Tests/xml/comment1.xml", "../../Tests/xml/comment2.xml", false, 3, 0, 0, 0, 0, 0, 2, 1, 1, 0, 1, 0)]
         void CompareSuccessed(string f1, string f2, bool isequal, params int[] metrics)
         {
             var mf = new MainForm(true);

@@ -230,7 +230,7 @@
             this.treeView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.treeView.Name = "treeView";
             this.treeView.SelectedImageIndex = 0;
-            this.treeView.Size = new System.Drawing.Size(478, 712);
+            this.treeView.Size = new System.Drawing.Size(478, 710);
             this.treeView.TabIndex = 2;
             this.treeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
             // 
@@ -249,6 +249,8 @@
             this.imageList1.Images.SetKeyName(8, "exclamation-circle-1_icon-icons.com_70164.ico");
             this.imageList1.Images.SetKeyName(9, "Letter_T_orange_34868.ico");
             this.imageList1.Images.SetKeyName(10, "letter_t_icon_151240.ico");
+            this.imageList1.Images.SetKeyName(11, "sign-info-icon_34361.ico");
+            this.imageList1.Images.SetKeyName(12, "info_sign_icon_178711.ico");
             // 
             // splitContainer1
             // 
@@ -265,7 +267,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1460, 714);
+            this.splitContainer1.Size = new System.Drawing.Size(1460, 712);
             this.splitContainer1.SplitterDistance = 480;
             this.splitContainer1.SplitterWidth = 6;
             this.splitContainer1.TabIndex = 3;
@@ -286,8 +288,8 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.webBrowser2);
-            this.splitContainer2.Size = new System.Drawing.Size(974, 714);
-            this.splitContainer2.SplitterDistance = 354;
+            this.splitContainer2.Size = new System.Drawing.Size(974, 712);
+            this.splitContainer2.SplitterDistance = 353;
             this.splitContainer2.SplitterWidth = 5;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -299,7 +301,7 @@
             this.webBrowser1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(30, 31);
             this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(972, 352);
+            this.webBrowser1.Size = new System.Drawing.Size(972, 351);
             this.webBrowser1.TabIndex = 0;
             this.webBrowser1.WebBrowserShortcutsEnabled = false;
             // 
@@ -311,7 +313,7 @@
             this.webBrowser2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.webBrowser2.MinimumSize = new System.Drawing.Size(30, 31);
             this.webBrowser2.Name = "webBrowser2";
-            this.webBrowser2.Size = new System.Drawing.Size(972, 353);
+            this.webBrowser2.Size = new System.Drawing.Size(972, 352);
             this.webBrowser2.TabIndex = 1;
             this.webBrowser2.WebBrowserShortcutsEnabled = false;
             // 
@@ -329,7 +331,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1460, 74);
+            this.panel1.Size = new System.Drawing.Size(1460, 76);
             this.panel1.TabIndex = 4;
             // 
             // tableLayoutPanelLow
@@ -346,7 +348,7 @@
             this.tableLayoutPanelLow.Name = "tableLayoutPanelLow";
             this.tableLayoutPanelLow.RowCount = 1;
             this.tableLayoutPanelLow.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelLow.Size = new System.Drawing.Size(1456, 70);
+            this.tableLayoutPanelLow.Size = new System.Drawing.Size(1456, 72);
             this.tableLayoutPanelLow.TabIndex = 0;
             // 
             // splitContainer3
@@ -366,7 +368,7 @@
             // 
             this.splitContainer3.Panel2.Controls.Add(this.panel1);
             this.splitContainer3.Size = new System.Drawing.Size(1460, 794);
-            this.splitContainer3.SplitterDistance = 714;
+            this.splitContainer3.SplitterDistance = 712;
             this.splitContainer3.SplitterWidth = 6;
             this.splitContainer3.TabIndex = 5;
             // 

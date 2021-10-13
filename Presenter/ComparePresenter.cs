@@ -28,6 +28,8 @@ namespace XmlCompare.Presenter
         }
 
         private const string NoNameForElement = "No name";
+        private const string AttrName = "Attributes";
+        private const string CommentName = "Comments";
         Compare CompareModel = Compare.GetCompare();
         public ICompare CompareResult { get { return CompareModel; } }
         ICompareView CompareView;
@@ -62,7 +64,13 @@ namespace XmlCompare.Presenter
             CompareModel.SettingsModel = s;
             try
             {
-                CompareModel.Left = XDocument.Load(s.LeftFileName);
+                XmlReaderSettings readerSettings = new XmlReaderSettings();
+                readerSettings.IgnoreComments = false;
+                readerSettings.IgnoreWhitespace = true;
+                using (XmlReader reader = XmlReader.Create(s.LeftFileName, readerSettings))
+                {
+                    CompareModel.Left = XDocument.Load(reader);
+                }
             }
             catch
             {
@@ -71,7 +79,13 @@ namespace XmlCompare.Presenter
             }
             try
             {
-                CompareModel.Right = XDocument.Load(s.RightFileName);
+                XmlReaderSettings readerSettings = new XmlReaderSettings();
+                readerSettings.IgnoreComments = false;
+                readerSettings.IgnoreWhitespace = true;
+                using (XmlReader reader = XmlReader.Create(s.RightFileName, readerSettings))
+                {
+                    CompareModel.Right = XDocument.Load(reader);
+                }
             }
             catch
             {
@@ -198,7 +212,7 @@ namespace XmlCompare.Presenter
             IEnumerable<KeyValuePair<XAttribute, XAttribute>> both;
             IEnumerable<XAttribute> onlyRight;
             IEnumerable<XAttribute> onlyLeft;
-            var root = CreateNode(ownerCollection, "Attributes", NodeMode.Folder, null, null);
+            var root = CreateNode(ownerCollection, AttrName, NodeMode.Folder, null, null);
             var result = true;
 
             CompareAttributesDetails(left, right, out onlyLeft, out onlyRight, out both);
@@ -258,7 +272,31 @@ namespace XmlCompare.Presenter
         #region Comments
         private bool CompareComments(TreeNode<TreeNodeContent> ownerCollection, XElement left, XElement right)
         {
-            return true;
+            var lс = String.Join("", left.Nodes().Where(n => n.NodeType == XmlNodeType.Comment).Select(s => s.ToString()));
+            var rс = String.Join("", right.Nodes().Where(n => n.NodeType == XmlNodeType.Comment).Select(s => s.ToString()));
+            if(String.IsNullOrEmpty(lс))
+            {
+                if (String.IsNullOrEmpty(rс))
+                    return true; // comments are absent
+                else
+                    CreateNode(ownerCollection, CommentName, NodeMode.CommentAdded, left, right);
+            }
+            else
+            {
+                if (String.IsNullOrEmpty(rс))
+                    CreateNode(ownerCollection, CommentName, NodeMode.CommentRemoved, left, right);
+                else
+                {
+                    if(String.Equals(lс, rс))
+                    {
+                        CreateNode(ownerCollection, CommentName, NodeMode.Comment, left, right);
+                        return true; // comments are equal
+                    }
+                    else 
+                        CreateNode(ownerCollection, CommentName,  NodeMode.CommentChanged, left, right);
+                }
+            }
+            return false;
         }
         #endregion //Comments
 
