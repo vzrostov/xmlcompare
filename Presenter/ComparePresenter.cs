@@ -83,10 +83,11 @@ namespace XmlCompare.Presenter
             {
                 CompareView.SetFileNames(CompareModel.SettingsModel.LeftFileName, CompareModel.SettingsModel.RightFileName);
                 // start of comparing
-                bool isDiff = false;
-                RecursiveCompare(ownerCollection, CompareModel.Left?.Root, CompareModel.Right?.Root, out isDiff);
+                bool isGlobalDiff = false; // whether if any diffs at all
+                bool isInsideDiff = false; // whether if next inner level has diffs 
+                RecursiveCompare(ownerCollection, CompareModel.Left?.Root, CompareModel.Right?.Root, out isGlobalDiff, out isInsideDiff);
                 CompareModel.IsSuccessed = true;
-                CompareModel.HasDifferences = isDiff;
+                CompareModel.HasDifferences = isGlobalDiff;
                 ownerCollection.MarkParentNodesByChildren();
                 CompareModel.Data = ownerCollection;
                 CompareView.SetData(CompareModel);
@@ -95,12 +96,12 @@ namespace XmlCompare.Presenter
         #endregion //ISettingsToCompare
 
         #region Logic
-        private void RecursiveCompare(TreeNode<TreeNodeContent> ownerCollection, XElement left, XElement right, out bool isDiff)
+        private void RecursiveCompare(TreeNode<TreeNodeContent> ownerCollection, XElement left, XElement right, out bool isGlobalDiff, out bool isInsideDiff)
         {
             var resulta = CompareAttributes(ownerCollection, left, right);
             var resultc = CompareComments(ownerCollection, left, right);
             var resultt = CompareTexts(ownerCollection, left, right);
-            isDiff = (!resulta || !resultc || !resultt);
+            isInsideDiff = isGlobalDiff = (!resulta || !resultc || !resultt);
 
             // make left parts
             var leftElements = OrderByRules(left);
@@ -117,20 +118,22 @@ namespace XmlCompare.Presenter
                 if (rights == null)
                 {
                     CreateNode(ownerCollection, leftName, NodeMode.ElementRemoved, left, null);
-                    isDiff = true;
+                    isInsideDiff = isGlobalDiff = true;
                     continue;
                 }
 
+                // make a basic node
                 TreeNode<TreeNodeContent> node = CreateNode(ownerCollection, leftName != string.Empty ? leftName : "No name", 0, lefts, rights);
-                bool diff;
-                RecursiveCompare(node, lefts, rights, out diff);
-                if (!diff)
+                // work out children nodes
+                bool globaldiff;
+                bool insidediff;
+                RecursiveCompare(node, lefts, rights, out globaldiff, out insidediff);
+                if (globaldiff)
+                    isGlobalDiff = true;
+                if (insidediff)
                 {
-                }
-                else
-                {
-                    isDiff = true;
-                    node.Value.Mode = NodeMode.ElementChanged;
+                    isInsideDiff = false;
+                    node.Value.Mode = NodeMode.ElementChanged; // only the one element can be changed, upper elements must be TheSameDiffInside
                 }
             }
 
@@ -140,7 +143,7 @@ namespace XmlCompare.Presenter
                 rightElements.TryGetValue(rName, out rights);
 
                 CreateNode(ownerCollection, rName, NodeMode.ElementAdded, null, right);
-                isDiff = true;
+                isInsideDiff = isGlobalDiff = true;
             }
         }
 
@@ -156,12 +159,20 @@ namespace XmlCompare.Presenter
             if(false) // TODO add setiing for it
             if(left.HasElements && right.HasElements) // check only if all of them are leafs
                 return true;
+            /*
+             * var textValues = element.Nodes()
+                        .Where(n => n.NodeType == XmlNodeType.Text)
+                        .Select(n => n.ToString().Trim());
+
+                string value = string.Join("", textValues); // value is:   This is a test value
+
+             * */
             //TODO add comparing wo child info
             // ...
             //TODO use Trim
             // ...
             var result = String.Equals(left.Value, right.Value);
-            if(left.Value.Length!=0 && right.Value.Length != 0)
+            if(left.Value.Length!=0 || right.Value.Length != 0)
                 CreateNode(ownerCollection, "Texts", result? NodeMode.ElementText : NodeMode.ElementTextChanged,
                     left, right);
             return result;

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<Element attr="root">
+	root text
+	<Element11>	
+		<Element111>	
+		</Element111>
+		<Element112>	
+			<Element1121 attr="q">	
+			</Element1121>
+		</Element112>
+	</Element11>
+	<Element12>	
+		<Element121 attr="">	
+		</Element121>
+		<Element122>	
+		</Element122>
+		<Element124>	
+		</Element124>
+	</Element12>
+</Element>
